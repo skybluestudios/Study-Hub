@@ -68,7 +68,7 @@ const CONFIG={
   defLang:'en-US'           // language of the definition
 };
 /* ====================================================== */
-pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc=URL.createObjectURL(new Blob(['importScripts("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js");'],{type:'text/javascript'}));
 const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -125,13 +125,14 @@ async function parsePdf(doc,onp){
     let its=tc.items.filter(i=>i.str&&i.str.trim()).map(i=>{const[x,y]=vp.convertToViewportPoint(i.transform[4],i.transform[5]);return{s:i.str,x,y,p}});
     if(p===1){const top=its.slice().sort((a,b)=>a.y-b.y)[0];title=top?top.s.trim():''}
     its=its.filter(i=>{const t=i.s.trim();return t!==title&&!/^Study online at/i.test(t)&&!/^\d+\s*\/\s*\d+$/.test(t)});
-    const isStart=i=>i.x<vp.width*.2&&/^\d{1,3}\.(\s|$)/.test(i.s.trim());
-    const rows=its.filter(isStart).sort((a,b)=>a.y-b.y).map(s=>{const m=s.s.trim().match(/^(\d{1,3})\.\s*(.*)$/);return{n:+m[1],y:s.y,first:m[2],L:[],R:[],boxes:[]}});
-    for(const i of its.filter(i=>!isStart(i))){
+    const isStart=i=>i.x<vp.width*.25&&/^\d{1,3}(\.(\s|$)|$)/.test(i.s.trim());
+    const rows=its.filter(isStart).sort((a,b)=>a.y-b.y).map(s=>{const m=s.s.trim().match(/^(\d{1,3})\.?\s*(.*)$/);return{n:+m[1],y:s.y,first:m[2],L:[],R:[],boxes:[]}});
+    for(const i of its.filter(i=>!isStart(i)&&i.s.trim()!=='.')){
       let row=null;for(const r of rows)if(r.y<=i.y+18)row=r;
       const t=row||last;if(!t)continue;(i.x<vp.width*.5?t.L:t.R).push(i);
     }
     // images: track the transform matrix to find where each picture sits
+    try{
     const ol=await page.getOperatorList();let ctm=[1,0,0,1,0,0];const st=[];
     for(let k=0;k<ol.fnArray.length;k++){
       const fn=ol.fnArray[k],a=ol.argsArray[k];
@@ -161,6 +162,7 @@ async function parsePdf(doc,onp){
         r.img=o.toDataURL('image/jpeg',.85);
       }
     }
+    }catch(err){console.warn('Pictures skipped on page '+p,err)}
     rows.forEach(r=>entries.push(r));if(rows.length)last=rows[rows.length-1];
   }
   const items=entries.map(e=>({n:e.n,term:build(e.L,e.first),def:build(e.R,''),img:e.img||''})).filter(i=>i.term);
@@ -188,7 +190,7 @@ async function openLocal(f){if(!f)return;const t={id:'local:'+f.name,title:f.nam
 async function openTopic(i){const t=T[i];if(t.items)return menu(t);await run(t,{url:t.url})}
 async function run(t,src){
   try{await loadTopic(t,src);menu(t)}
-  catch(e){const bad=T.indexOf(t);console.error(e);app.innerHTML=`<div class="panel center"><h3>😕 Couldn't read that PDF</h3><p>${location.protocol==='file:'?'Browsers block loading files straight from your computer. Upload to GitHub Pages, or use “Open a PDF from this computer”.':'It may not be a Quizlet export (numbered list of terms and definitions), or the file name is wrong.'}</p><button class="btn" onclick="home()">Back</button></div>`}
+  catch(e){const bad=T.indexOf(t);console.error(e);app.innerHTML=`<div class="panel center"><h3>😕 Couldn't read that PDF</h3><p>${location.protocol==='file:'?'Browsers block loading files straight from your computer. Upload to GitHub Pages, or use “Open a PDF from this computer”.':'It may not be a Quizlet export (numbered list of terms and definitions), or the file name is wrong.'}</p><p style="color:var(--mut);font-size:.85rem">Technical detail: ${esc((e&&(e.message||e.name))||e)}<br>File: ${esc(t.url||t.id)}</p><button class="btn" onclick="home()">Back</button></div>`}
 }
 function menu(t){
   stopTimer();keyH=null;cur=t;view='menu';setTop(t.title);const it=t.items,mast=it.filter(x=>stars(t,x)>=2).length,pc=it.filter(x=>x.img).length,wk=it.filter(weak).length,p=prog(t);
