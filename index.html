@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Study Hub</title>
+<style>
+:root{--ink:#1d2340;--mut:#6b7299;--pri:#4f46e5;--pri2:#7c3aed;--ok:#16a34a;--bad:#dc2626;--card:#fff;--line:#e3e7fb}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:linear-gradient(160deg,#eef2ff,#fdf2f8);min-height:100vh}
+header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px #4f46e555}
+header h1{font-size:1.1rem;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header button{background:#ffffff30;border:0;color:#fff;border-radius:10px;padding:8px 12px;font-size:1rem;cursor:pointer}
+#xp{font-weight:700;font-size:.95rem}
+main{max-width:860px;margin:0 auto;padding:18px}
+.hero{text-align:center;margin:10px 0 20px}.hero h2{margin:0 0 4px;font-size:1.7rem}.hero p{margin:0;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.topic,.menu button{background:var(--card);border:2px solid var(--line);border-radius:var(--rad,18px);padding:18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;font:inherit;color:inherit;transition:.15s}
+.topic:hover,.menu button:hover{transform:translateY(-3px);border-color:var(--pri);box-shadow:0 8px 22px #4f46e522}
+.topic .ico{font-size:2rem}.topic small,.menu small{color:var(--mut)}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#16a34a)}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px}
+.menu b{font-size:1.1rem}
+.panel{background:var(--card);border-radius:20px;padding:22px;box-shadow:0 6px 24px #1d234012;margin-bottom:16px}
+.center{text-align:center}.big{font-size:2rem;font-weight:800;margin:10px 0}.tag{display:inline-block;background:#eef2ff;color:var(--pri);border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:700}
+.btn{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:12px;padding:12px 20px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
+.btn.alt{background:#eef2ff;color:var(--pri)}.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}.btn:disabled{opacity:.5}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}.chip{border:2px solid var(--line);background:#fff;border-radius:99px;padding:8px 14px;cursor:pointer;font:inherit;color:inherit}.chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+img.qimg{max-width:100%;max-height:260px;border-radius:14px;margin:8px auto;display:block;background:#fff}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}.big{font-size:1.5rem}}
+.opt{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;font:inherit;font-size:1.05rem;cursor:pointer;color:inherit;text-align:left}
+.opt:hover:not(:disabled){border-color:var(--pri)}.opt.good{background:#dcfce7;border-color:var(--ok)}.opt.wrong{background:#fee2e2;border-color:var(--bad)}
+input.ans{width:100%;font:inherit;font-size:1.2rem;padding:14px;border:2px solid var(--line);border-radius:14px;margin-top:12px}
+input.ans:focus{outline:none;border-color:var(--pri)}
+.fb{margin-top:14px;padding:14px;border-radius:14px;text-align:center}.fb.ok{background:#dcfce7}.fb.no{background:#fee2e2}
+.prog{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem;margin-bottom:6px}
+.fcwrap{perspective:1200px;cursor:pointer}
+.fc{position:relative;min-height:340px;transition:transform .5s;transform-style:preserve-3d}.fc.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:#fff;border-radius:20px;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 24px #1d234018;border:2px solid var(--line)}
+.face.back{transform:rotateY(180deg);background:linear-gradient(160deg,#eef2ff,#fff)}
+.wl{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.wc{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px;text-align:center;cursor:pointer}
+.wc img{width:100%;height:110px;object-fit:contain;border-radius:10px}.wc b{display:block;margin-top:6px}.wc span{color:var(--mut);font-size:.9rem}
+.stars{letter-spacing:2px;color:#f59e0b;font-size:.8rem}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mc{background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px;min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font:inherit;color:inherit;gap:4px}
+.mc img{max-width:100%;max-height:80px;object-fit:contain}.mc.sel{border-color:var(--pri);background:#eef2ff}.mc.done{background:#dcfce7;border-color:var(--ok);opacity:.55;pointer-events:none}.mc.shake{background:#fee2e2;border-color:var(--bad)}
+.sp{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px}.sp button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem}
+.miss{display:flex;gap:12px;align-items:center;background:#fff7f7;border:1px solid #fecaca;border-radius:12px;padding:8px;margin-top:8px;text-align:left}.miss img{width:56px;height:56px;object-fit:contain}
+.spin{width:44px;height:44px;border:5px solid var(--line);border-top-color:var(--pri);border-radius:50%;animation:s 1s linear infinite;margin:14px auto}@keyframes s{to{transform:rotate(360deg)}}
+canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
+a.lnk{color:var(--pri);cursor:pointer;text-decoration:underline;background:none;border:0;font:inherit}
+</style>
+</head>
+<body>
+<header><button onclick="home()" title="Home">🏠</button><h1 id="ttl">Study Hub</h1><span id="xp"></span></header>
+<main id="app"></main>
+<canvas id="cf"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+/* ============ SETTINGS (edit if you like) ============ */
+const CONFIG={
+  listFile:'pdfs.txt',      // one PDF filename per line (optional "file.pdf | Nice title")
+  repo:'',                  // optional "owner/repo" if auto-detect from the GitHub Pages URL is not wanted
+  termLang:'es-ES',         // language of the left-hand term (used for the 🔊 button)
+  defLang:'en-US'           // language of the definition
+};
+/* ====================================================== */
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const store={get(){try{return JSON.parse(localStorage.getItem('studyhub')||'{}')}catch{return{}}},set(v){try{localStorage.setItem('studyhub',JSON.stringify(v))}catch{}}};
+let P=store.get(),T=[],cur=null,keyH=null,timer=null,view='';
+const prog=t=>(P[t.id]=P[t.id]||{best:0,plays:0,stars:{}});
+const stars=(t,it)=>prog(t).stars[it.n]||0;
+const weak=it=>stars(cur,it)<2;
+function setTop(t){$('#ttl').textContent=t;$('#xp').textContent='⭐ '+(P._xp||0)}
+function addXP(n){P._xp=(P._xp||0)+n;store.set(P);$('#xp').textContent='⭐ '+P._xp}
+function stopTimer(){clearInterval(timer);timer=null}
+function speak(txt,lang){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(txt).replace(/[\/…]|\.\.\./g,' '));u.lang=lang||CONFIG.termLang;u.rate=.85;speechSynthesis.speak(u)}catch{}}
+function confetti(){const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const ps=Array.from({length:130},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:Math.random()*4-2,vy:2+Math.random()*4,s:5+Math.random()*7,c:`hsl(${Math.random()*360},85%,60%)`,r:Math.random()*6}));let f=0;(function d(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.15;x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++f<150)requestAnimationFrame(d);else x.clearRect(0,0,c.width,c.height)})()}
+
+/* ---------- discovering PDFs ---------- */
+function ghInfo(){
+  if(CONFIG.repo){const[o,r]=CONFIG.repo.split('/');return{owner:o,repo:r,proj:true}}
+  const h=location.hostname;if(!h.endsWith('.github.io'))return null;
+  const owner=h.split('.')[0],seg=location.pathname.split('/').filter(Boolean)[0];
+  if(seg&&!/\.html?$/i.test(seg))return{owner,repo:seg,proj:true};
+  return{owner,repo:owner+'.github.io',proj:false};
+}
+async function discover(){
+  const found=new Map();
+  const add=(path,title)=>{try{const url=new URL(path,base).href;if(!found.has(url.toLowerCase()))found.set(url.toLowerCase(),{url,title})}catch{}};
+  let base=location.href;
+  try{const r=await fetch(CONFIG.listFile+'?t='+Date.now());if(r.ok){(await r.text()).split(/\r?\n/).map(s=>s.trim()).filter(s=>s&&!s.startsWith('#')).forEach(l=>{const[f,t]=l.split('|').map(s=>s.trim());add(f,t)})}}catch{}
+  const gh=ghInfo();
+  if(gh){
+    base=location.origin+(gh.proj?'/'+gh.repo+'/':'/');
+    try{const r=await fetch(`https://api.github.com/repos/${gh.owner}/${gh.repo}/git/trees/HEAD?recursive=1`);
+      if(r.ok){(await r.json()).tree.filter(t=>t.type==='blob'&&/\.pdf$/i.test(t.path)).forEach(t=>add(encodeURI(t.path)))}}catch{}
+  }
+  return[...found.values()].map(f=>({id:f.url,url:f.url,title:f.title||decodeURIComponent(f.url.split('/').pop()).replace(/\.pdf$/i,'').replace(/[_-]+/g,' ')}));
+}
+
+/* ---------- reading a Quizlet-style PDF ---------- */
+const FIXES=[[/fexib/gi,m=>m[0]==='F'?'Flexib':'flexib'],[/sufciente/gi,'suficiente'],[/\bfnd\b/g,'find'],[/\bfrst\b/g,'first']];
+const fix=s=>FIXES.reduce((a,[r,v])=>a.replace(r,v),s);
+function build(arr,first){
+  arr=arr.slice().sort((a,b)=>a.p-b.p||a.y-b.y||a.x-b.x);const lines=[];
+  for(const i of arr){const l=lines[lines.length-1];
+    if(l&&l.p===i.p&&Math.abs(l.y-i.y)<8)l.t+=(/\s$/.test(l.t)||/^\s/.test(i.s)?'':' ')+i.s;else lines.push({p:i.p,y:i.y,t:i.s})}
+  let out=first||'';
+  for(const l of lines){const t=l.t.trim();if(!out)out=t;else if(/[a-zñáéíóú]-$/.test(out)&&/^[a-zñáéíóú]/.test(t))out=out.slice(0,-1)+t;else out+=' '+t}
+  return fix(out.replace(/\s+/g,' ').trim());
+}
+async function parsePdf(doc,onp){
+  const U=pdfjsLib.Util,OPS=pdfjsLib.OPS,entries=[];let title='',last=null;
+  const IMG=[OPS.paintImageXObject,OPS.paintInlineImageXObject,OPS.paintImageMaskXObject,OPS.paintJpegXObject].filter(x=>x!==undefined);
+  for(let p=1;p<=doc.numPages;p++){
+    onp(p,doc.numPages);
+    const page=await doc.getPage(p),vp=page.getViewport({scale:2}),tc=await page.getTextContent();
+    let its=tc.items.filter(i=>i.str&&i.str.trim()).map(i=>{const[x,y]=vp.convertToViewportPoint(i.transform[4],i.transform[5]);return{s:i.str,x,y,p}});
+    if(p===1){const top=its.slice().sort((a,b)=>a.y-b.y)[0];title=top?top.s.trim():''}
+    its=its.filter(i=>{const t=i.s.trim();return t!==title&&!/^Study online at/i.test(t)&&!/^\d+\s*\/\s*\d+$/.test(t)});
+    const isStart=i=>i.x<vp.width*.2&&/^\d{1,3}\.(\s|$)/.test(i.s.trim());
+    const rows=its.filter(isStart).sort((a,b)=>a.y-b.y).map(s=>{const m=s.s.trim().match(/^(\d{1,3})\.\s*(.*)$/);return{n:+m[1],y:s.y,first:m[2],L:[],R:[],boxes:[]}});
+    for(const i of its.filter(i=>!isStart(i))){
+      let row=null;for(const r of rows)if(r.y<=i.y+18)row=r;
+      const t=row||last;if(!t)continue;(i.x<vp.width*.5?t.L:t.R).push(i);
+    }
+    // images: track the transform matrix to find where each picture sits
+    const ol=await page.getOperatorList();let ctm=[1,0,0,1,0,0];const st=[];
+    for(let k=0;k<ol.fnArray.length;k++){
+      const fn=ol.fnArray[k],a=ol.argsArray[k];
+      if(fn===OPS.save)st.push(ctm.slice());
+      else if(fn===OPS.restore)ctm=st.pop()||ctm;
+      else if(fn===OPS.transform)ctm=U.transform(ctm,a);
+      else if(fn===OPS.paintFormXObjectBegin){st.push(ctm.slice());if(a&&a[0])ctm=U.transform(ctm,a[0])}
+      else if(fn===OPS.paintFormXObjectEnd)ctm=st.pop()||ctm;
+      else if(IMG.includes(fn)){
+        const m=U.transform(vp.transform,ctm),pts=[[0,0],[1,0],[0,1],[1,1]].map(q=>U.applyTransform(q,m));
+        const x0=Math.min(...pts.map(q=>q[0])),x1=Math.max(...pts.map(q=>q[0])),y0=Math.min(...pts.map(q=>q[1])),y1=Math.max(...pts.map(q=>q[1]));
+        if(x0<vp.width*.5||x1-x0<30||y1-y0<30)continue;      // skips logo / tiny stuff
+        const cy=(y0+y1)/2;let tgt=null;for(const r of rows)if(r.y<=cy)tgt=r;
+        tgt=tgt||last;if(tgt)tgt.boxes.push({x0,x1,y0,y1});
+      }
+    }
+    const targets=[...new Set([...rows,last].filter(r=>r&&r.boxes.length))];
+    if(targets.length){
+      const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
+      await page.render({canvasContext:cv.getContext('2d'),viewport:vp,background:'rgb(255,255,255)'}).promise;
+      for(const r of targets){
+        const b=r.boxes;r.boxes=[];
+        const x0=Math.max(0,Math.floor(Math.min(...b.map(q=>q.x0)))),x1=Math.min(cv.width,Math.ceil(Math.max(...b.map(q=>q.x1)))),
+              y0=Math.max(0,Math.floor(Math.min(...b.map(q=>q.y0)))),y1=Math.min(cv.height,Math.ceil(Math.max(...b.map(q=>q.y1))));
+        const w=x1-x0,h=y1-y0;if(w<10||h<10)continue;const sc=Math.min(1,480/w),o=document.createElement('canvas');
+        o.width=Math.round(w*sc);o.height=Math.round(h*sc);o.getContext('2d').drawImage(cv,x0,y0,w,h,0,0,o.width,o.height);
+        r.img=o.toDataURL('image/jpeg',.85);
+      }
+    }
+    rows.forEach(r=>entries.push(r));if(rows.length)last=rows[rows.length-1];
+  }
+  const items=entries.map(e=>({n:e.n,term:build(e.L,e.first),def:build(e.R,''),img:e.img||''})).filter(i=>i.term);
+  return{title,items};
+}
+async function loadTopic(t,source){
+  app.innerHTML=`<div class="panel center"><div class="spin"></div><b id="lm">Opening…</b></div>`;
+  const doc=await pdfjsLib.getDocument(source).promise;
+  const r=await parsePdf(doc,(p,n)=>{const e=$('#lm');if(e)e.textContent=`Reading page ${p} of ${n}…`});
+  if(!r.items.length)throw new Error('empty');
+  t.items=r.items;if(r.title&&!t.titleFixed)t.title=r.title;
+}
+
+/* ---------- views ---------- */
+function home(){
+  stopTimer();keyH=null;cur=null;view='home';setTop('Study Hub');
+  let h=`<div class="hero"><h2>📚 What do you want to study?</h2><p>Pick a topic, learn the words with pictures, then test yourself.</p></div>`;
+  if(!T.length)h+=`<div class="panel center"><b>No study PDFs found yet.</b><p>Put your PDF files in the same GitHub repository as this page (or list them in <code>pdfs.txt</code>, one per line).</p></div>`;
+  else h+='<div class="grid">'+T.map((t,i)=>{const m=t.items?Math.round(t.items.filter(it=>stars(t,it)>=2).length/t.items.length*100):null;
+    return `<button class="topic" onclick="openTopic(${i})"><div class="ico">📘</div><b>${esc(t.title)}</b><small>${t.items?t.items.length+' words · '+m+'% mastered':'Tap to start'}</small>${m!==null?`<div class="bar"><i style="width:${m}%"></i></div>`:''}</button>`}).join('')+'</div>';
+  h+=`<p class="center" style="margin-top:22px"><label class="btn alt" style="display:inline-block">📂 Open a PDF from this computer<input type="file" accept="application/pdf" hidden onchange="openLocal(this.files[0])"></label></p>`;
+  app.innerHTML=h;
+}
+async function openLocal(f){if(!f)return;const t={id:'local:'+f.name,title:f.name.replace(/\.pdf$/i,'')};T.push(t);await run(t,{data:new Uint8Array(await f.arrayBuffer())})}
+async function openTopic(i){const t=T[i];if(t.items)return menu(t);await run(t,{url:t.url})}
+async function run(t,src){
+  try{await loadTopic(t,src);menu(t)}
+  catch(e){const bad=T.indexOf(t);console.error(e);app.innerHTML=`<div class="panel center"><h3>😕 Couldn't read that PDF</h3><p>${location.protocol==='file:'?'Browsers block loading files straight from your computer. Upload to GitHub Pages, or use “Open a PDF from this computer”.':'It may not be a Quizlet export (numbered list of terms and definitions), or the file name is wrong.'}</p><button class="btn" onclick="home()">Back</button></div>`}
+}
+function menu(t){
+  stopTimer();keyH=null;cur=t;view='menu';setTop(t.title);const it=t.items,mast=it.filter(x=>stars(t,x)>=2).length,pc=it.filter(x=>x.img).length,wk=it.filter(weak).length,p=prog(t);
+  app.innerHTML=`<div class="panel center"><span class="tag">${it.length} words · ${pc} pictures</span><div class="big">${esc(t.title)}</div>
+  <div class="bar"><i style="width:${Math.round(mast/it.length*100)}%"></i></div><small style="color:var(--mut)">${mast} of ${it.length} mastered · best quiz ${p.best}%</small></div>
+  <div class="menu">
+   <button onclick="startFC()"><span style="font-size:1.8rem">🃏</span><b>Learn</b><small>Flashcards with pictures & sound</small></button>
+   <button onclick="wordList()"><span style="font-size:1.8rem">📖</span><b>Word list</b><small>See every word at once</small></button>
+   <button onclick="quizSetup()"><span style="font-size:1.8rem">📝</span><b>Quiz</b><small>Multiple choice & typing</small></button>
+   <button onclick="startMatch()"><span style="font-size:1.8rem">🧩</span><b>Matching game</b><small>Race the clock</small></button>
+   ${wk&&wk<it.length?`<button onclick="quizWeak()"><span style="font-size:1.8rem">🎯</span><b>Practice weak words</b><small>${wk} words need work</small></button>`:''}
+  </div>`;
+}
+
+/* ----- flashcards ----- */
+let fc;
+function startFC(){fc={deck:cur.items.slice(),i:0,flip:false,rev:false};renderFC()}
+function renderFC(){
+  view='fc';const d=fc.deck;
+  if(fc.i>=d.length){keyH=null;app.innerHTML=`<div class="panel center"><div class="big">🎉 Deck finished!</div><div class="row"><button class="btn" onclick="startFC()">Again</button><button class="btn alt" onclick="quizSetup()">Take the quiz</button><button class="btn alt" onclick="menu(cur)">Back</button></div></div>`;confetti();return}
+  const it=d[fc.i],img=it.img?`<img class="qimg" src="${it.img}">`:'';
+  const A=fc.rev?`<div class="big" style="font-size:1.5rem">${esc(it.def||'🖼️ Look at the picture!')}</div>`:`<div class="big">${esc(it.term)}</div>`;
+  const B=fc.rev?`<div class="big">${esc(it.term)}</div>`:`<div class="big" style="font-size:1.6rem">${esc(it.def||'🖼️ Look at the picture!')}</div><div style="color:var(--mut)">${esc(it.term)}</div>`;
+  app.innerHTML=`<div class="prog"><span>Card ${fc.i+1} of ${d.length}</span><span class="stars">${'★'.repeat(stars(cur,it))}${'☆'.repeat(3-stars(cur,it))}</span></div>
+  <div class="bar" style="margin-bottom:12px"><i style="width:${fc.i/d.length*100}%;background:var(--pri)"></i></div>
+  <div class="fcwrap" onclick="flipFC()"><div class="fc ${fc.flip?'flip':''}" id="fcc"><div class="face">${img}${A}<small style="color:var(--mut)">tap to flip</small></div><div class="face back">${img}${B}</div></div></div>
+  <div class="row"><button class="btn alt" onclick="speak('${esc(it.term).replace(/'/g,"\\'")}')">🔊 Listen</button><button class="btn alt" onclick="fc.rev=!fc.rev;renderFC()">🔄 Swap sides</button><button class="btn alt" onclick="fc.deck=shuffle(fc.deck);fc.i=0;renderFC()">🔀 Shuffle</button></div>
+  <div class="row"><button class="btn bad" onclick="fcMark(false)">😅 Still learning</button><button class="btn ok" onclick="fcMark(true)">✅ I know it</button></div>
+  <p class="center" style="color:var(--mut);font-size:.85rem">Keys: Space = flip · ← → = move · 1 = still learning · 2 = know it</p>`;
+  keyH=e=>{if(e.key===' '){e.preventDefault();flipFC()}else if(e.key==='ArrowRight'){fc.i=Math.min(fc.deck.length,fc.i+1);fc.flip=false;renderFC()}else if(e.key==='ArrowLeft'){fc.i=Math.max(0,fc.i-1);fc.flip=false;renderFC()}else if(e.key==='1')fcMark(false);else if(e.key==='2')fcMark(true)};
+}
+function flipFC(){fc.flip=!fc.flip;$('#fcc').classList.toggle('flip',fc.flip);if(fc.flip&&!fc.rev)speak(fc.deck[fc.i].term)}
+function fcMark(k){const it=fc.deck[fc.i],s=prog(cur).stars;s[it.n]=k?Math.min(3,(s[it.n]||0)+1):Math.max(0,(s[it.n]||0)-1);if(k)addXP(2);store.set(P);fc.i++;fc.flip=false;renderFC()}
+
+/* ----- word list ----- */
+function wordList(){
+  view='wl';keyH=null;
+  app.innerHTML=`<div class="panel"><b>📖 ${esc(cur.title)}</b> <small style="color:var(--mut)">— tap a card to hear it</small></div><div class="wl">${cur.items.map((it,i)=>`<div class="wc" onclick="speak(cur.items[${i}].term)">${it.img?`<img src="${it.img}">`:'<div style="height:110px;display:grid;place-items:center;font-size:2rem">📝</div>'}<b>${esc(it.term)}</b><span>${esc(it.def||'(see picture)')}</span><div class="stars">${'★'.repeat(stars(cur,it))}${'☆'.repeat(3-stars(cur,it))}</div></div>`).join('')}</div><div class="row"><button class="btn alt" onclick="menu(cur)">Back</button></div>`;
+}
+
+/* ----- quiz ----- */
+const clean=s=>s.toLowerCase().replace(/[’‘]/g,"'").replace(/[.…¿?¡!,;:"“”()]/g,'').replace(/\s+/g,' ').trim();
+const norm=s=>clean(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+function variants(s){const o=new Set();for(const part of s.split(' / ')){let b=[part];if(/o\/a/.test(part))b=[part.replace(/o\/a/g,'o'),part.replace(/o\/a/g,'a')];b.forEach(x=>{o.add(x);o.add(x.replace(/^to /,''))})}return[...o]}
+function grade(inp,ans){const vs=ans.flatMap(variants),c=clean(inp);if(!c)return'no';if(vs.some(v=>clean(v)===c))return'ok';const n=norm(inp);return vs.some(v=>norm(v)===n)?'accent':'no'}
+let qo={dir:'mixed',fmt:'mixed',n:10},qz;
+function chips(k,opts){return`<div class="chips">${opts.map(([v,l])=>`<button class="chip ${qo[k]===v?'on':''}" onclick="qo.${k}=${typeof v==='number'?v:`'${v}'`};quizSetup()">${l}</button>`).join('')}</div>`}
+function quizSetup(){
+  view='qs';keyH=null;
+  app.innerHTML=`<div class="panel"><h3 style="margin-top:0">📝 Quiz setup</h3><b>Question type</b>${chips('dir',[['mixed','🎲 Mixed'],['es-en','Spanish → English'],['en-es','English → Spanish'],['img-es','🖼️ Picture → Spanish']])}
+  <b>Answer style</b>${chips('fmt',[['mixed','🎲 Mixed'],['mc','Multiple choice'],['type','⌨️ Type it']])}
+  <b>Length</b>${chips('n',[[10,'10'],[20,'20'],[999,'All']])}
+  <div class="row"><button class="btn" onclick="startQuiz()">Start quiz 🚀</button><button class="btn alt" onclick="menu(cur)">Back</button></div></div>`;
+}
+function makeQuiz(items,o){
+  const qs=[];
+  for(const it of shuffle(items)){
+    const ds=[];if(it.def)ds.push('es-en','en-es');if(it.img)ds.push('img-es');
+    const dirs=o.dir==='mixed'?ds:ds.filter(d=>d===o.dir);if(!dirs.length)continue;
+    qs.push({it,dir:dirs[Math.random()*dirs.length|0],fmt:o.fmt==='mixed'?(Math.random()<.6?'mc':'type'):o.fmt});
+    if(qs.length>=o.n)break;
+  }
+  return qs;
+}
+function answersOf(q){const it=q.it;if(q.dir==='es-en')return[it.def];if(q.dir==='en-es')return cur.items.filter(x=>x.def&&norm(x.def)===norm(it.def)).map(x=>x.term);return[it.term]}
+function prepQ(q){
+  q.ans=answersOf(q);const acc=new Set(q.ans.map(norm)),key=q.dir==='es-en'?'def':'term';
+  q.show=q.ans[0];
+  if(q.fmt==='mc'){
+    const pool=[...new Set(cur.items.map(x=>x[key]).filter(v=>v&&!acc.has(norm(v))))];
+    q.opts=shuffle([q.show,...shuffle(pool).slice(0,3)]);
+  }
+}
+function startQuiz(items){
+  const qs=makeQuiz(items||cur.items,{...qo,n:qo.n>=999?1e9:qo.n});
+  if(!qs.length){app.innerHTML=`<div class="panel center">Not enough material for that quiz type. <div class="row"><button class="btn" onclick="quizSetup()">Back</button></div></div>`;return}
+  qs.forEach(prepQ);qz={qs,i:0,score:0,streak:0,best:0,missed:[],done:false};showQ();
+}
+function quizWeak(){const o={...qo};qo={dir:'mixed',fmt:'mixed',n:999};startQuiz(cur.items.filter(weak));qo=o}
+function showQ(){
+  const q=qz.qs[qz.i];if(!q)return finishQuiz();view='quiz';qz.done=false;const it=q.it;
+  const pr=q.dir==='es-en'?`<span class="tag">Spanish → English</span><div class="big">${esc(it.term)} <button class="btn alt" style="padding:6px 10px" onclick="speak('${esc(it.term).replace(/'/g,"\\'")}')">🔊</button></div><div>What does it mean?</div>`
+    :q.dir==='en-es'?`<span class="tag">English → Spanish</span><div class="big">${esc(it.def)}</div><div>How do you say it in Spanish?</div>`
+    :`<span class="tag">Picture → Spanish</span><img class="qimg" src="${it.img}"><div>What is this in Spanish?</div>`;
+  const body=q.fmt==='mc'?`<div class="opts">${q.opts.map((o,i)=>`<button class="opt" onclick="pickMC(${i})"><b style="color:var(--mut)">${i+1}</b> &nbsp;${esc(o)}</button>`).join('')}</div>`
+    :`<input class="ans" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer…">${q.dir!=='es-en'?`<div class="sp">${'áéíóúñü¿¡'.split('').map(c=>`<button onclick="addCh('${c}')">${c}</button>`).join('')}</div>`:''}<div class="row"><button class="btn" onclick="checkTyped()">Check</button></div>`;
+  app.innerHTML=`<div class="prog"><span>Question ${qz.i+1} of ${qz.qs.length}</span><span>🔥 ${qz.streak} · ${qz.score} correct</span></div><div class="bar" style="margin-bottom:12px"><i style="width:${qz.i/qz.qs.length*100}%;background:var(--pri)"></i></div>
+  <div class="panel center">${pr}${body}<div id="fb"></div></div>`;
+  if(q.fmt==='type')setTimeout(()=>$('#ans')&&$('#ans').focus(),50);
+  keyH=e=>{if(e.key==='Enter'){if(qz.done)nextQ();else if(q.fmt==='type')checkTyped()}else if(q.fmt==='mc'&&!qz.done&&/^[1-4]$/.test(e.key)&&q.opts[+e.key-1]!==undefined)pickMC(+e.key-1)};
+}
+function addCh(c){const a=$('#ans');a.value+=c;a.focus()}
+function pickMC(i){const q=qz.qs[qz.i];if(qz.done)return;const ok=q.ans.some(a=>norm(a)===norm(q.opts[i]));
+  document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(q.ans.some(a=>norm(a)===norm(q.opts[j])))b.classList.add('good');else if(j===i)b.classList.add('wrong')});resolveQ(ok,'')}
+function checkTyped(){const q=qz.qs[qz.i];if(qz.done)return;const inp=$('#ans').value,g=grade(inp,q.ans);$('#ans').disabled=true;
+  resolveQ(g!=='no',g==='accent'?`Watch the accents: <b>${esc(q.show)}</b>`:'')}
+function resolveQ(ok,note){
+  const q=qz.qs[qz.i];qz.done=true;const s=prog(cur).stars,n=q.it.n;
+  if(ok){qz.score++;qz.streak++;qz.best=Math.max(qz.best,qz.streak);s[n]=Math.min(3,(s[n]||0)+1);addXP(10+Math.min(qz.streak,5))}
+  else{qz.streak=0;qz.missed.push(q);s[n]=Math.max(0,(s[n]||0)-1)}
+  store.set(P);
+  $('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}"><b>${ok?['✅ Correct!','🌟 Great job!','🔥 Nice one!','💪 Yes!'][Math.random()*4|0]:'❌ Not quite'}</b>${ok?'':`<div>Answer: <b>${esc(q.show)}</b></div>`}${note?`<div>${note}</div>`:''}
+  ${q.it.img&&q.dir!=='img-es'?`<img class="qimg" style="max-height:140px" src="${q.it.img}">`:''}<div style="color:var(--mut)">${esc(q.it.term)} = ${esc(q.it.def||'(picture)')}</div></div>
+  <div class="row"><button class="btn" onclick="nextQ()">${qz.i+1>=qz.qs.length?'See results':'Next →'}</button></div>`;
+}
+function nextQ(){qz.i++;showQ()}
+function finishQuiz(){
+  view='res';keyH=null;const n=qz.qs.length,pc=Math.round(qz.score/n*100),p=prog(cur);p.best=Math.max(p.best,pc);p.plays++;store.set(P);addXP(5);
+  app.innerHTML=`<div class="panel center"><div class="big">${pc>=90?'🏆 Amazing!':pc>=70?'🎉 Well done!':pc>=50?'👍 Good effort!':'💪 Keep practising!'}</div><div class="big" style="font-size:3rem">${pc}%</div><p>${qz.score} of ${n} correct · best streak 🔥 ${qz.best}</p>
+  ${qz.missed.length?`<h4>Words to review</h4>${qz.missed.map(q=>`<div class="miss">${q.it.img?`<img src="${q.it.img}">`:''}<div><b>${esc(q.it.term)}</b><br><span style="color:var(--mut)">${esc(q.it.def||'(see picture)')}</span></div></div>`).join('')}`:''}
+  <div class="row"><button class="btn" onclick="startQuiz()">Try again</button>${qz.missed.length?`<button class="btn alt" onclick="startQuiz(qz.missed.map(q=>q.it))">Retry missed</button>`:''}<button class="btn alt" onclick="menu(cur)">Back</button></div></div>`;
+  if(pc>=70)confetti();
+}
+
+/* ----- matching game ----- */
+let mt;
+function startMatch(){
+  const seenD=new Set(),seenT=new Set(),pool=[];
+  for(const it of shuffle(cur.items)){if(!(it.def||it.img))continue;const d=it.def&&norm(it.def),t=norm(it.term);if((d&&seenD.has(d))||seenT.has(t))continue;d&&seenD.add(d);seenT.add(t);pool.push(it);if(pool.length>=6)break}
+  mt={cards:shuffle([...pool.map(it=>({it,side:'L'})),...pool.map(it=>({it,side:'R'}))]),sel:null,done:new Set(),moves:0,t0:Date.now()};
+  renderMatch();stopTimer();timer=setInterval(()=>{const e=$('#tm');if(e)e.textContent=Math.floor((Date.now()-mt.t0)/1000)+'s'},500);
+}
+function renderMatch(){
+  view='match';keyH=null;
+  app.innerHTML=`<div class="prog"><span>🧩 Match each Spanish word with its meaning</span><span>⏱ <b id="tm">0s</b> · moves ${mt.moves}</span></div><div class="mg">${mt.cards.map((c,i)=>`<button class="mc ${mt.done.has(i)?'done':''} ${mt.sel===i?'sel':''}" onclick="pickM(${i})">${c.side==='L'?`<b>${esc(c.it.term)}</b>`:`${c.it.img?`<img src="${c.it.img}">`:''}${c.it.def?`<span>${esc(c.it.def)}</span>`:''}`}</button>`).join('')}</div><div class="row"><button class="btn alt" onclick="menu(cur)">Back</button></div>`;
+}
+function pickM(i){
+  if(mt.done.has(i)||mt.sel===i)return;
+  if(mt.sel===null){mt.sel=i;speakIf(i);return renderMatch()}
+  const a=mt.cards[mt.sel],b=mt.cards[i];mt.moves++;
+  const same=a.side!==b.side&&(a.it===b.it||(a.it.def&&norm(a.it.def)===norm(b.it.def)));
+  if(same){mt.done.add(mt.sel);mt.done.add(i);mt.sel=null;addXP(5);renderMatch();
+    if(mt.done.size===mt.cards.length){stopTimer();const t=Math.floor((Date.now()-mt.t0)/1000);confetti();
+      app.innerHTML=`<div class="panel center"><div class="big">🎉 All matched!</div><p>${t} seconds · ${mt.moves} moves</p><div class="row"><button class="btn" onclick="startMatch()">Play again</button><button class="btn alt" onclick="menu(cur)">Back</button></div></div>`}}
+  else{const s=mt.sel;mt.sel=null;renderMatch();const bs=document.querySelectorAll('.mc');[s,i].forEach(k=>bs[k].classList.add('shake'));setTimeout(()=>view==='match'&&renderMatch(),600)}
+}
+function speakIf(i){const c=mt.cards[i];if(c.side==='L')speak(c.it.term)}
+
+document.addEventListener('keydown',e=>{if(keyH&&!(e.target.tagName==='INPUT'&&e.key!=='Enter'))keyH(e)});
+
+/* ---------- start ---------- */
+(async()=>{
+  setTop('Study Hub');
+  app.innerHTML=`<div class="panel center"><div class="spin"></div><b>Looking for study materials…</b></div>`;
+  T=await discover();home();
+})();
+</script>
+</body>
+</html>
