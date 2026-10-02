@@ -2,70 +2,117 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Study Hub</title>
 <style>
-:root{--ink:#1d2340;--mut:#6b7299;--pri:#4f46e5;--pri2:#7c3aed;--ok:#16a34a;--bad:#dc2626;--card:#fff;--line:#e3e7fb}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:linear-gradient(160deg,#eef2ff,#fdf2f8);min-height:100vh}
-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px #4f46e555}
-header h1{font-size:1.1rem;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-header button{background:#ffffff30;border:0;color:#fff;border-radius:10px;padding:8px 12px;font-size:1rem;cursor:pointer}
-#xp{font-weight:700;font-size:.95rem}
-main{max-width:860px;margin:0 auto;padding:18px}
-.hero{text-align:center;margin:10px 0 20px}.hero h2{margin:0 0 4px;font-size:1.7rem}.hero p{margin:0;color:var(--mut)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-.topic,.menu button{background:var(--card);border:2px solid var(--line);border-radius:var(--rad,18px);padding:18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;font:inherit;color:inherit;transition:.15s}
-.topic:hover,.menu button:hover{transform:translateY(-3px);border-color:var(--pri);box-shadow:0 8px 22px #4f46e522}
-.topic .ico{font-size:2rem}.topic small,.menu small{color:var(--mut)}
-.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#16a34a)}
-.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px}
-.menu b{font-size:1.1rem}
-.panel{background:var(--card);border-radius:20px;padding:22px;box-shadow:0 6px 24px #1d234012;margin-bottom:16px}
-.center{text-align:center}.big{font-size:2rem;font-weight:800;margin:10px 0}.tag{display:inline-block;background:#eef2ff;color:var(--pri);border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:700}
-.btn{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:12px;padding:12px 20px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
-.btn.alt{background:#eef2ff;color:var(--pri)}.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}.btn:disabled{opacity:.5}
-.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}.chip{border:2px solid var(--line);background:#fff;border-radius:99px;padding:8px 14px;cursor:pointer;font:inherit;color:inherit}.chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
-img.qimg{max-width:100%;max-height:260px;border-radius:14px;margin:8px auto;display:block;background:#fff}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-@media(max-width:560px){.opts{grid-template-columns:1fr}.big{font-size:1.5rem}}
-.opt{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;font:inherit;font-size:1.05rem;cursor:pointer;color:inherit;text-align:left}
-.opt:hover:not(:disabled){border-color:var(--pri)}.opt.good{background:#dcfce7;border-color:var(--ok)}.opt.wrong{background:#fee2e2;border-color:var(--bad)}
-input.ans{width:100%;font:inherit;font-size:1.2rem;padding:14px;border:2px solid var(--line);border-radius:14px;margin-top:12px}
-input.ans:focus{outline:none;border-color:var(--pri)}
-.fb{margin-top:14px;padding:14px;border-radius:14px;text-align:center}.fb.ok{background:#dcfce7}.fb.no{background:#fee2e2}
-.prog{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem;margin-bottom:6px}
-.fcwrap{perspective:1200px;cursor:pointer}
-.fc{position:relative;min-height:340px;transition:transform .5s;transform-style:preserve-3d}.fc.flip{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;background:#fff;border-radius:20px;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 24px #1d234018;border:2px solid var(--line)}
-.face.back{transform:rotateY(180deg);background:linear-gradient(160deg,#eef2ff,#fff)}
-.wl{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.wc{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px;text-align:center;cursor:pointer}
-.wc img{width:100%;height:110px;object-fit:contain;border-radius:10px}.wc b{display:block;margin-top:6px}.wc span{color:var(--mut);font-size:.9rem}
-.stars{letter-spacing:2px;color:#f59e0b;font-size:.8rem}
-.mg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mc{background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px;min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font:inherit;color:inherit;gap:4px}
-.mc img{max-width:100%;max-height:80px;object-fit:contain}.mc.sel{border-color:var(--pri);background:#eef2ff}.mc.done{background:#dcfce7;border-color:var(--ok);opacity:.55;pointer-events:none}.mc.shake{background:#fee2e2;border-color:var(--bad)}
-.sp{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px}.sp button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem}
-.miss{display:flex;gap:12px;align-items:center;background:#fff7f7;border:1px solid #fecaca;border-radius:12px;padding:8px;margin-top:8px;text-align:left}.miss img{width:56px;height:56px;object-fit:contain}
-.spin{width:44px;height:44px;border:5px solid var(--line);border-top-color:var(--pri);border-radius:50%;animation:s 1s linear infinite;margin:14px auto}@keyframes s{to{transform:rotate(360deg)}}
+:root{--bg:#f5f6fc;--card:#fff;--card2:#f1f3fd;--ink:#14172f;--mut:#667091;--line:#e3e6f6;--pri:#5b5bf0;--pri2:#9b5cf6;--pink:#ec5bb5;--ok:#10b981;--okbg:#d9f7ea;--bad:#ef4444;--badbg:#fde4e4;--glass:rgba(255,255,255,.78);--sh:0 14px 34px -14px rgba(50,50,140,.30);--sh2:0 2px 10px rgba(50,50,140,.08);--grad:linear-gradient(135deg,#5b5bf0,#9b5cf6 60%,#ec5bb5)}
+[data-theme=dark]{color-scheme:dark;--bg:#0c0e1d;--card:#161933;--card2:#1e2245;--ink:#eef0ff;--mut:#9aa3c9;--line:#292e58;--okbg:#0e3b2f;--badbg:#4a1a22;--glass:rgba(12,14,29,.75);--sh:0 14px 34px -14px rgba(0,0,0,.7);--sh2:0 2px 10px rgba(0,0,0,.4)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(700px 420px at 8% -8%,#5b5bf033,transparent),radial-gradient(560px 420px at 100% 0,#ec5bb528,transparent),radial-gradient(500px 400px at 50% 110%,#06b6d422,transparent)}
+button{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;border:0;background:none;padding:0;flex:1;min-width:0;text-align:left}
+.logo i{width:36px;height:36px;border-radius:12px;background:var(--grad);display:grid;place-items:center;font-style:normal;font-size:1.2rem;box-shadow:0 6px 16px -4px #5b5bf099}
+.logo b{font-size:1.05rem;letter-spacing:-.01em}.logo small{display:block;color:var(--mut);font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46vw}
+.xp{background:linear-gradient(135deg,#fbbf24,#f97316);color:#fff;font-weight:800;border-radius:99px;padding:6px 12px;font-size:.85rem;box-shadow:0 6px 14px -6px #f97316aa}
+.ib{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:1.05rem;display:grid;place-items:center;box-shadow:var(--sh2)}
+.ib:hover{border-color:var(--pri)}
+main{max-width:940px;margin:0 auto;padding:20px 16px 60px}
+.view{animation:in .35s ease both}@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.back{border:0;background:none;color:var(--mut);cursor:pointer;font-weight:600;padding:4px 0 14px;font-size:.95rem}.back:hover{color:var(--pri)}
+.hero{background:var(--grad);color:#fff;border-radius:28px;padding:30px 28px;margin-bottom:22px;box-shadow:0 22px 40px -22px #5b5bf0;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:#ffffff1f}
+.hero h2{margin:12px 0 6px;font-size:clamp(1.5rem,4vw,2.1rem);letter-spacing:-.02em;max-width:560px;line-height:1.15}.hero p{margin:0;opacity:.9;max-width:520px}
+.pill{display:inline-block;background:#ffffff2e;border-radius:99px;padding:5px 12px;font-size:.8rem;font-weight:700;backdrop-filter:blur(4px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.tcard{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden;cursor:pointer;text-align:left;padding:0;box-shadow:var(--sh2);transition:transform .2s,box-shadow .2s}
+.tcard:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+.cover{height:130px;background:linear-gradient(135deg,var(--a),var(--b));display:grid;place-items:center;font-size:3rem;overflow:hidden}
+.mos{display:grid;grid-template-columns:1fr 1fr;width:100%;height:100%;gap:2px;background:#fff}.mos img{width:100%;height:100%;object-fit:cover}
+.tbody{padding:14px 16px 16px}.tbody b{display:block;font-size:1.05rem;letter-spacing:-.01em}.tbody small{color:var(--mut)}
+.tring{position:absolute;right:12px;top:98px;background:var(--card);border-radius:50%;padding:3px;box-shadow:var(--sh2);color:var(--ink)}
+.go{position:absolute;right:14px;bottom:14px;width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:800}
+.banner{display:flex;align-items:center;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--sh2);margin-bottom:18px}
+.banner h2{margin:6px 0 10px;font-size:clamp(1.3rem,3.6vw,1.8rem);letter-spacing:-.02em;line-height:1.15}.banner>div:first-child{flex:1;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border-radius:99px;padding:5px 12px;font-size:.82rem;font-weight:600;color:var(--mut);margin:0 6px 6px 0}
+.acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.act{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;cursor:pointer;text-align:left;box-shadow:var(--sh2);transition:.18s}
+.act:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:var(--pri)}
+.act .ic{flex:none;width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--c1),var(--c2));display:grid;place-items:center;font-size:1.5rem;box-shadow:0 10px 18px -8px var(--c1)}
+.act b{display:block;font-size:1.02rem}.act small{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--sh2);margin-bottom:16px}
+.center{text-align:center}
+.btn{background:var(--grad);color:#fff;border:0;border-radius:14px;padding:13px 22px;font-weight:700;cursor:pointer;box-shadow:0 10px 20px -10px #5b5bf0;transition:.15s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.06)}.btn:active{transform:none}
+.btn.soft{background:var(--card2);color:var(--ink);box-shadow:none;border:1px solid var(--line)}.btn.soft:hover{border-color:var(--pri)}
+.btn.ok{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 10px 20px -10px #10b981}.btn.bad{background:linear-gradient(135deg,#f87171,#ef4444);box-shadow:0 10px 20px -10px #ef4444}
+.btn.big{padding:16px 28px;font-size:1.05rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+.sg{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:9px 15px;cursor:pointer;font-weight:600;color:var(--mut);transition:.15s}.sg.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 16px -8px #5b5bf0}
+h3.sec{margin:0 0 4px;font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--mut)}
+.bar{height:10px;background:var(--card2);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--grad);border-radius:99px;transition:width .4s}
+.tag{display:inline-block;background:var(--card2);color:var(--pri);border-radius:99px;padding:5px 13px;font-size:.78rem;font-weight:800;letter-spacing:.03em}
+.qtop{display:flex;align-items:center;gap:12px;margin-bottom:14px}.qtop .bar{flex:1}.qtop span{font-weight:700;color:var(--mut);font-size:.9rem;white-space:nowrap}
+.streak{background:#fff4e0;color:#c2410c;border-radius:99px;padding:4px 11px;font-weight:800;font-size:.85rem}[data-theme=dark] .streak{background:#4a2a10;color:#fdba74}
+.prompt{font-size:clamp(1.7rem,5vw,2.5rem);font-weight:800;letter-spacing:-.02em;margin:14px 0 6px;line-height:1.15}
+.sub{color:var(--mut)}
+img.qimg{max-width:100%;max-height:270px;border-radius:18px;margin:12px auto;display:block;background:#fff;box-shadow:var(--sh2)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;text-align:left}
+@media(max-width:600px){.opts{grid-template-columns:1fr}.banner{flex-direction:column;align-items:flex-start}}
+.opt{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;font-size:1.02rem;font-weight:600;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--pri);transform:translateY(-2px);box-shadow:var(--sh2)}
+.opt .k{flex:none;width:30px;height:30px;border-radius:9px;background:var(--card2);color:var(--mut);display:grid;place-items:center;font-size:.85rem;font-weight:800}
+.opt.good{background:var(--okbg);border-color:var(--ok)}.opt.good .k{background:var(--ok);color:#fff}.opt.wrong{background:var(--badbg);border-color:var(--bad)}.opt.wrong .k{background:var(--bad);color:#fff}.opt:disabled{cursor:default}
+input.ans{width:100%;font:inherit;font-size:1.3rem;font-weight:600;padding:16px 18px;border:2px solid var(--line);border-radius:16px;margin-top:18px;background:var(--card);color:var(--ink);text-align:center}
+input.ans:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 5px #5b5bf022}
+.sp{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px}.sp button{border:1px solid var(--line);background:var(--card);border-radius:10px;min-width:38px;height:38px;cursor:pointer;font-size:1.05rem;font-weight:600}.sp button:hover{border-color:var(--pri)}
+.fb{margin-top:20px;padding:16px;border-radius:18px;text-align:center;animation:in .3s both}.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}.fb b.t{font-size:1.15rem}
+.fcw{perspective:1400px;cursor:pointer}
+.fc{position:relative;height:min(430px,64vh);min-height:340px;transition:transform .55s cubic-bezier(.3,.8,.3,1);transform-style:preserve-3d}.fc.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-radius:30px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;box-shadow:var(--sh);text-align:center;overflow:hidden}
+.face.back{transform:rotateY(180deg);background:linear-gradient(160deg,var(--card),var(--card2))}
+.face img.qimg{max-height:min(200px,28vh);margin:0 auto 8px}
+.hint{color:var(--mut);font-size:.78rem;position:absolute;bottom:12px}
+.ctl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.wl{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.wc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px;text-align:center;cursor:pointer;box-shadow:var(--sh2);position:relative;transition:.15s}.wc:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.wc img{width:100%;height:110px;object-fit:contain;border-radius:12px;background:#fff}.wc .ph{height:110px;display:grid;place-items:center;font-size:2.2rem;background:var(--card2);border-radius:12px}
+.wc b{display:block;margin-top:8px}.wc span{color:var(--mut);font-size:.88rem}
+.wc .en{position:absolute;top:8px;right:8px;border:0;background:#ffffffd9;color:#14172f;border-radius:8px;font-size:.7rem;font-weight:800;padding:4px 7px;cursor:pointer}
+.st{color:#f59e0b;letter-spacing:2px;font-size:.78rem}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mc{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:10px;min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:5px;text-align:center;transition:.15s;font-weight:600}
+.mc:hover{border-color:var(--pri)}.mc img{max-width:100%;max-height:84px;object-fit:contain;border-radius:8px}.mc small{font-weight:500;color:var(--mut)}
+.mc.sel{border-color:var(--pri);background:var(--card2);transform:scale(1.03)}.mc.done{background:var(--okbg);border-color:var(--ok);opacity:.5;pointer-events:none}.mc.shake{background:var(--badbg);border-color:var(--bad);animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.miss{display:flex;gap:12px;align-items:center;background:var(--badbg);border-radius:14px;padding:10px;margin-top:8px;text-align:left}.miss img{width:54px;height:54px;object-fit:contain;border-radius:8px;background:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.stats div{background:var(--card2);border-radius:16px;padding:12px}.stats b{display:block;font-size:1.4rem}.stats span{color:var(--mut);font-size:.8rem}
+.spin{width:46px;height:46px;border:5px solid var(--line);border-top-color:var(--pri);border-radius:50%;animation:s 1s linear infinite;margin:16px auto}@keyframes s{to{transform:rotate(360deg)}}
+select{width:100%;font:inherit;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);margin:6px 0 16px}
+.note{color:var(--mut);font-size:.85rem}
 canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
-a.lnk{color:var(--pri);cursor:pointer;text-decoration:underline;background:none;border:0;font:inherit}
+.ring{display:block}
 </style>
 </head>
 <body>
-<header><button onclick="home()" title="Home">🏠</button><h1 id="ttl">Study Hub</h1><span id="xp"></span></header>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b5bf0"/><stop offset="1" stop-color="#ec5bb5"/></linearGradient></defs></svg>
+<header>
+  <button class="logo" onclick="home()"><i>🎓</i><span><b>Study Hub</b><small id="crumb"></small></span></button>
+  <span class="xp" id="xp"></span>
+  <button class="ib" id="thm" onclick="toggleTheme()" title="Light / dark">🌙</button>
+  <button class="ib" onclick="settings()" title="Voice & settings">⚙️</button>
+</header>
 <main id="app"></main>
 <canvas id="cf"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 /* ============ SETTINGS (edit if you like) ============ */
 const CONFIG={
-  listFile:'pdfs.txt',      // one PDF filename per line (optional "file.pdf | Nice title")
-  repo:'',                  // optional "owner/repo" if auto-detect from the GitHub Pages URL is not wanted
-  termLang:'es-ES',         // language of the left-hand term (used for the 🔊 button)
-  defLang:'en-US'           // language of the definition
+  listFile:'pdfs.txt',   // one PDF file name per line (optional "file.pdf | Nice title")
+  repo:''                // optional "owner/repo" override for GitHub auto-detect
 };
 /* ====================================================== */
 pdfjsLib.GlobalWorkerOptions.workerSrc=URL.createObjectURL(new Blob(['importScripts("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js");'],{type:'text/javascript'}));
@@ -73,15 +120,45 @@ const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const store={get(){try{return JSON.parse(localStorage.getItem('studyhub')||'{}')}catch{return{}}},set(v){try{localStorage.setItem('studyhub',JSON.stringify(v))}catch{}}};
-let P=store.get(),T=[],cur=null,keyH=null,timer=null,view='';
+let P=store.get(),T=[],cur=null,keyH=null,timer=null,view='',ret=()=>home();
+const S=Object.assign({es:'',en:'',rate:.9,auto:true,theme:''},P._set||{});
+const saveS=()=>{P._set=S;store.set(P)};
 const prog=t=>(P[t.id]=P[t.id]||{best:0,plays:0,stars:{}});
 const stars=(t,it)=>prog(t).stars[it.n]||0;
 const weak=it=>stars(cur,it)<2;
-function setTop(t){$('#ttl').textContent=t;$('#xp').textContent='⭐ '+(P._xp||0)}
+const byN=n=>cur.items.find(x=>x.n===n);
+const GR=[['#5b5bf0','#9b5cf6'],['#06b6d4','#3b82f6'],['#f97316','#ec4899'],['#10b981','#14b8a6'],['#f59e0b','#ef4444'],['#8b5cf6','#ec4899']];
+function applyTheme(){const t=S.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;$('#thm').textContent=t==='dark'?'☀️':'🌙'}
+function toggleTheme(){S.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';saveS();applyTheme()}
+function setTop(t){$('#crumb').textContent=t||'';$('#xp').textContent='⭐ '+(P._xp||0)}
 function addXP(n){P._xp=(P._xp||0)+n;store.set(P);$('#xp').textContent='⭐ '+P._xp}
 function stopTimer(){clearInterval(timer);timer=null}
-function speak(txt,lang){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(txt).replace(/[\/…]|\.\.\./g,' '));u.lang=lang||CONFIG.termLang;u.rate=.85;speechSynthesis.speak(u)}catch{}}
-function confetti(){const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const ps=Array.from({length:130},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:Math.random()*4-2,vy:2+Math.random()*4,s:5+Math.random()*7,c:`hsl(${Math.random()*360},85%,60%)`,r:Math.random()*6}));let f=0;(function d(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.15;x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++f<150)requestAnimationFrame(d);else x.clearRect(0,0,c.width,c.height)})()}
+function render(h){app.innerHTML=`<div class="view">${h}</div>`;scrollTo(0,0)}
+const ring=(pct,size=56,sw=6)=>{const r=(size-sw)/2,c=2*Math.PI*r,m=size/2;return`<svg class="ring" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="var(--line)" stroke-width="${sw}"/><circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="url(#g)" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct/100)}" transform="rotate(-90 ${m} ${m})"/><text x="50%" y="50%" dy=".35em" text-anchor="middle" font-size="${size*.26}" font-weight="800" fill="currentColor">${pct}%</text></svg>`};
+function confetti(){const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const ps=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:Math.random()*4-2,vy:2+Math.random()*4,s:5+Math.random()*7,c:`hsl(${Math.random()*360},85%,60%)`,r:Math.random()*6}));let f=0;(function d(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.15;x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++f<160)requestAnimationFrame(d);else x.clearRect(0,0,c.width,c.height)})()}
+
+/* ---------- voice (free, built into the browser: no key, no popups) ---------- */
+const Voice={list:[],
+  load(){try{this.list=speechSynthesis.getVoices()||[]}catch{this.list=[]}},
+  sc(v){const n=v.name;let s=0;
+    if(/natural|neural|online/i.test(n))s+=100;if(/premium|enhanced|siri/i.test(n))s+=80;if(/google/i.test(n))s+=60;if(/microsoft/i.test(n))s+=30;if(!v.localService)s+=10;
+    if(/\b(eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley|bad news|bahh|bells|boing|bubbles|cellos|jester|organ|superstar|trinoids|whisper|wobble|zarvox|albert|fred|junior|kathy|ralph)\b/i.test(n))s-=200;
+    if(/en-us/i.test(v.lang.replace('_','-')))s+=3;return s},
+  for(lang){return this.list.filter(v=>v.lang.toLowerCase().replace('_','-').startsWith(lang)).sort((a,b)=>this.sc(b)-this.sc(a))},
+  pick(lang){const l=this.for(lang);return l.find(v=>v.name===S[lang])||l[0]||null}
+};
+Voice.load();try{speechSynthesis.onvoiceschanged=()=>{Voice.load();if(view==='set')settings()}}catch{}
+let spk=0,aud=null;
+function say4(t,lang){return String(t).replace(/o\/a\b/g,'o').replace(/\s*\/\s*/g,lang==='es'?' o ':' or ').replace(/\.\.\.|…/g,'').replace(/\s+/g,' ').trim()}
+function speak(text,lang='es',done){
+  const id=++spk;try{speechSynthesis.cancel()}catch{}if(aud){try{aud.pause()}catch{}aud=null}
+  const t=say4(text,lang);if(!t)return done&&done();
+  const fin=()=>{if(id===spk&&done)done()},v=Voice.pick(lang);
+  if(!v){try{aud=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl='+lang+'&q='+encodeURIComponent(t));aud.onended=fin;aud.play().catch(fin)}catch{fin()}return}
+  setTimeout(()=>{if(id!==spk)return;const u=new SpeechSynthesisUtterance(t);u.voice=v;u.lang=v.lang;u.rate=S.rate;u.pitch=1;u.onend=fin;u.onerror=fin;window._u=u;speechSynthesis.speak(u)},50);
+}
+const sayN=(n,lang)=>{const it=byN(n);if(it)speak(lang==='en'?it.def:it.term,lang)};
+const sayBoth=n=>{const it=byN(n);if(!it)return;speak(it.term,'es',()=>it.def&&setTimeout(()=>speak(it.def,'en'),250))};
 
 /* ---------- discovering PDFs ---------- */
 function ghInfo(){
@@ -92,9 +169,8 @@ function ghInfo(){
   return{owner,repo:owner+'.github.io',proj:false};
 }
 async function discover(){
-  const found=new Map();
+  const found=new Map();let base=location.href;
   const add=(path,title)=>{try{const url=new URL(path,base).href;if(!found.has(url.toLowerCase()))found.set(url.toLowerCase(),{url,title})}catch{}};
-  let base=location.href;
   try{const r=await fetch(CONFIG.listFile+'?t='+Date.now());if(r.ok){(await r.text()).split(/\r?\n/).map(s=>s.trim()).filter(s=>s&&!s.startsWith('#')).forEach(l=>{const[f,t]=l.split('|').map(s=>s.trim());add(f,t)})}}catch{}
   const gh=ghInfo();
   if(gh){
@@ -102,7 +178,7 @@ async function discover(){
     try{const r=await fetch(`https://api.github.com/repos/${gh.owner}/${gh.repo}/git/trees/HEAD?recursive=1`);
       if(r.ok){(await r.json()).tree.filter(t=>t.type==='blob'&&/\.pdf$/i.test(t.path)).forEach(t=>add(encodeURI(t.path)))}}catch{}
   }
-  return[...found.values()].map(f=>({id:f.url,url:f.url,title:f.title||decodeURIComponent(f.url.split('/').pop()).replace(/\.pdf$/i,'').replace(/[_-]+/g,' ')}));
+  return[...found.values()].map(f=>({id:f.url,url:f.url,title:f.title||decodeURIComponent(f.url.split('/').pop()).replace(/\.pdf$/i,'').replace(/[_-]+/g,' '),titleFixed:!!f.title}));
 }
 
 /* ---------- reading a Quizlet-style PDF ---------- */
@@ -131,119 +207,130 @@ async function parsePdf(doc,onp){
       let row=null;for(const r of rows)if(r.y<=i.y+18)row=r;
       const t=row||last;if(!t)continue;(i.x<vp.width*.5?t.L:t.R).push(i);
     }
-    // images: track the transform matrix to find where each picture sits
     try{
-    const ol=await page.getOperatorList();let ctm=[1,0,0,1,0,0];const st=[];
-    for(let k=0;k<ol.fnArray.length;k++){
-      const fn=ol.fnArray[k],a=ol.argsArray[k];
-      if(fn===OPS.save)st.push(ctm.slice());
-      else if(fn===OPS.restore)ctm=st.pop()||ctm;
-      else if(fn===OPS.transform)ctm=U.transform(ctm,a);
-      else if(fn===OPS.paintFormXObjectBegin){st.push(ctm.slice());if(a&&a[0])ctm=U.transform(ctm,a[0])}
-      else if(fn===OPS.paintFormXObjectEnd)ctm=st.pop()||ctm;
-      else if(IMG.includes(fn)){
-        const m=U.transform(vp.transform,ctm),pts=[[0,0],[1,0],[0,1],[1,1]].map(q=>U.applyTransform(q,m));
-        const x0=Math.min(...pts.map(q=>q[0])),x1=Math.max(...pts.map(q=>q[0])),y0=Math.min(...pts.map(q=>q[1])),y1=Math.max(...pts.map(q=>q[1]));
-        if(x0<vp.width*.5||x1-x0<30||y1-y0<30)continue;      // skips logo / tiny stuff
-        const cy=(y0+y1)/2;let tgt=null;for(const r of rows)if(r.y<=cy)tgt=r;
-        tgt=tgt||last;if(tgt)tgt.boxes.push({x0,x1,y0,y1});
+      const ol=await page.getOperatorList();let ctm=[1,0,0,1,0,0];const st=[];
+      for(let k=0;k<ol.fnArray.length;k++){
+        const fn=ol.fnArray[k],a=ol.argsArray[k];
+        if(fn===OPS.save)st.push(ctm.slice());
+        else if(fn===OPS.restore)ctm=st.pop()||ctm;
+        else if(fn===OPS.transform)ctm=U.transform(ctm,a);
+        else if(fn===OPS.paintFormXObjectBegin){st.push(ctm.slice());if(a&&a[0])ctm=U.transform(ctm,a[0])}
+        else if(fn===OPS.paintFormXObjectEnd)ctm=st.pop()||ctm;
+        else if(IMG.includes(fn)){
+          const m=U.transform(vp.transform,ctm),pts=[[0,0],[1,0],[0,1],[1,1]].map(q=>U.applyTransform(q,m));
+          const x0=Math.min(...pts.map(q=>q[0])),x1=Math.max(...pts.map(q=>q[0])),y0=Math.min(...pts.map(q=>q[1])),y1=Math.max(...pts.map(q=>q[1]));
+          if(x0<vp.width*.5||x1-x0<30||y1-y0<30)continue;
+          const cy=(y0+y1)/2;let tgt=null;for(const r of rows)if(r.y<=cy)tgt=r;
+          tgt=tgt||last;if(tgt)tgt.boxes.push({x0,x1,y0,y1});
+        }
       }
-    }
-    const targets=[...new Set([...rows,last].filter(r=>r&&r.boxes.length))];
-    if(targets.length){
-      const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
-      await page.render({canvasContext:cv.getContext('2d'),viewport:vp,background:'rgb(255,255,255)'}).promise;
-      for(const r of targets){
-        const b=r.boxes;r.boxes=[];
-        const x0=Math.max(0,Math.floor(Math.min(...b.map(q=>q.x0)))),x1=Math.min(cv.width,Math.ceil(Math.max(...b.map(q=>q.x1)))),
-              y0=Math.max(0,Math.floor(Math.min(...b.map(q=>q.y0)))),y1=Math.min(cv.height,Math.ceil(Math.max(...b.map(q=>q.y1))));
-        const w=x1-x0,h=y1-y0;if(w<10||h<10)continue;const sc=Math.min(1,480/w),o=document.createElement('canvas');
-        o.width=Math.round(w*sc);o.height=Math.round(h*sc);o.getContext('2d').drawImage(cv,x0,y0,w,h,0,0,o.width,o.height);
-        r.img=o.toDataURL('image/jpeg',.85);
+      const targets=[...new Set([...rows,last].filter(r=>r&&r.boxes.length))];
+      if(targets.length){
+        const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
+        await page.render({canvasContext:cv.getContext('2d'),viewport:vp,background:'rgb(255,255,255)'}).promise;
+        for(const r of targets){
+          const b=r.boxes;r.boxes=[];
+          const x0=Math.max(0,Math.floor(Math.min(...b.map(q=>q.x0)))),x1=Math.min(cv.width,Math.ceil(Math.max(...b.map(q=>q.x1)))),
+                y0=Math.max(0,Math.floor(Math.min(...b.map(q=>q.y0)))),y1=Math.min(cv.height,Math.ceil(Math.max(...b.map(q=>q.y1))));
+          const w=x1-x0,h=y1-y0;if(w<10||h<10)continue;const sc=Math.min(1,480/w),o=document.createElement('canvas');
+          o.width=Math.round(w*sc);o.height=Math.round(h*sc);o.getContext('2d').drawImage(cv,x0,y0,w,h,0,0,o.width,o.height);
+          r.img=o.toDataURL('image/jpeg',.85);
+        }
       }
-    }
     }catch(err){console.warn('Pictures skipped on page '+p,err)}
     rows.forEach(r=>entries.push(r));if(rows.length)last=rows[rows.length-1];
   }
   const items=entries.map(e=>({n:e.n,term:build(e.L,e.first),def:build(e.R,''),img:e.img||''})).filter(i=>i.term);
   return{title,items};
 }
-async function loadTopic(t,source){
-  app.innerHTML=`<div class="panel center"><div class="spin"></div><b id="lm">Opening…</b></div>`;
-  const doc=await pdfjsLib.getDocument(source).promise;
+async function loadTopic(t){
+  render(`<div class="card center"><div class="spin"></div><b id="lm">Opening…</b></div>`);
+  const doc=await pdfjsLib.getDocument({url:t.url}).promise;
   const r=await parsePdf(doc,(p,n)=>{const e=$('#lm');if(e)e.textContent=`Reading page ${p} of ${n}…`});
-  if(!r.items.length)throw new Error('empty');
+  if(!r.items.length)throw new Error('No numbered terms found in this PDF');
   t.items=r.items;if(r.title&&!t.titleFixed)t.title=r.title;
 }
 
-/* ---------- views ---------- */
+/* ---------- screens ---------- */
 function home(){
-  stopTimer();keyH=null;cur=null;view='home';setTop('Study Hub');
-  let h=`<div class="hero"><h2>📚 What do you want to study?</h2><p>Pick a topic, learn the words with pictures, then test yourself.</p></div>`;
-  if(!T.length)h+=`<div class="panel center"><b>No study PDFs found yet.</b><p>Put your PDF files in the same GitHub repository as this page (or list them in <code>pdfs.txt</code>, one per line).</p></div>`;
-  else h+='<div class="grid">'+T.map((t,i)=>{const m=t.items?Math.round(t.items.filter(it=>stars(t,it)>=2).length/t.items.length*100):null;
-    return `<button class="topic" onclick="openTopic(${i})"><div class="ico">📘</div><b>${esc(t.title)}</b><small>${t.items?t.items.length+' words · '+m+'% mastered':'Tap to start'}</small>${m!==null?`<div class="bar"><i style="width:${m}%"></i></div>`:''}</button>`}).join('')+'</div>';
-  h+=`<p class="center" style="margin-top:22px"><label class="btn alt" style="display:inline-block">📂 Open a PDF from this computer<input type="file" accept="application/pdf" hidden onchange="openLocal(this.files[0])"></label></p>`;
-  app.innerHTML=h;
+  stopTimer();keyH=null;cur=null;view='home';setTop('');
+  let h=`<section class="hero"><span class="pill">📚 Study Hub</span><h2>What would you like to learn today?</h2><p>Pick a topic, learn the words with pictures and sound, then test yourself.</p></section>`;
+  if(!T.length)h+=`<div class="card center"><div style="font-size:2.4rem">📂</div><h3>No study PDFs found yet</h3><p class="sub">Upload your PDF to the same GitHub repository as this page and add its name to <code>pdfs.txt</code> (one per line).</p></div>`;
+  else h+='<div class="grid">'+T.map((t,i)=>{const g=GR[i%GR.length],pct=t.items?Math.round(t.items.filter(it=>stars(t,it)>=2).length/t.items.length*100):0,imgs=t.items?t.items.filter(x=>x.img).slice(0,4):[];
+    return`<button class="tcard" onclick="openTopic(${i})"><div class="cover" style="--a:${g[0]};--b:${g[1]}">${imgs.length>=4?`<div class="mos">${imgs.map(x=>`<img src="${x.img}">`).join('')}</div>`:'📘'}</div><div class="tbody"><b>${esc(t.title)}</b><small>${t.items?t.items.length+' words':'Tap to open'}</small></div>${t.items?`<div class="tring">${ring(pct,50,6)}</div>`:'<span class="go">→</span>'}</button>`}).join('')+'</div>';
+  render(h);
 }
-async function openLocal(f){if(!f)return;const t={id:'local:'+f.name,title:f.name.replace(/\.pdf$/i,'')};T.push(t);await run(t,{data:new Uint8Array(await f.arrayBuffer())})}
-async function openTopic(i){const t=T[i];if(t.items)return menu(t);await run(t,{url:t.url})}
-async function run(t,src){
-  try{await loadTopic(t,src);menu(t)}
-  catch(e){const bad=T.indexOf(t);console.error(e);app.innerHTML=`<div class="panel center"><h3>😕 Couldn't read that PDF</h3><p>${location.protocol==='file:'?'Browsers block loading files straight from your computer. Upload to GitHub Pages, or use “Open a PDF from this computer”.':'It may not be a Quizlet export (numbered list of terms and definitions), or the file name is wrong.'}</p><p style="color:var(--mut);font-size:.85rem">Technical detail: ${esc((e&&(e.message||e.name))||e)}<br>File: ${esc(t.url||t.id)}</p><button class="btn" onclick="home()">Back</button></div>`}
-}
+async function openTopic(i){const t=T[i];if(t.items)return menu(t);try{await loadTopic(t);menu(t)}catch(e){console.error(e);
+  render(`<div class="card center"><div style="font-size:2.4rem">😕</div><h3>Couldn't read that PDF</h3><p class="sub">${location.protocol==='file:'?'Browsers block PDFs opened straight from your computer. Open the page from your GitHub Pages link instead.':'Check that the file name in pdfs.txt matches the PDF exactly, and that it is a Quizlet export (numbered terms and definitions).'}</p><p class="note">Technical detail: ${esc((e&&(e.message||e.name))||e)}<br>File: ${esc(t.url)}</p><div class="row"><button class="btn" onclick="home()">Back</button></div></div>`)}}
 function menu(t){
-  stopTimer();keyH=null;cur=t;view='menu';setTop(t.title);const it=t.items,mast=it.filter(x=>stars(t,x)>=2).length,pc=it.filter(x=>x.img).length,wk=it.filter(weak).length,p=prog(t);
-  app.innerHTML=`<div class="panel center"><span class="tag">${it.length} words · ${pc} pictures</span><div class="big">${esc(t.title)}</div>
-  <div class="bar"><i style="width:${Math.round(mast/it.length*100)}%"></i></div><small style="color:var(--mut)">${mast} of ${it.length} mastered · best quiz ${p.best}%</small></div>
-  <div class="menu">
-   <button onclick="startFC()"><span style="font-size:1.8rem">🃏</span><b>Learn</b><small>Flashcards with pictures & sound</small></button>
-   <button onclick="wordList()"><span style="font-size:1.8rem">📖</span><b>Word list</b><small>See every word at once</small></button>
-   <button onclick="quizSetup()"><span style="font-size:1.8rem">📝</span><b>Quiz</b><small>Multiple choice & typing</small></button>
-   <button onclick="startMatch()"><span style="font-size:1.8rem">🧩</span><b>Matching game</b><small>Race the clock</small></button>
-   ${wk&&wk<it.length?`<button onclick="quizWeak()"><span style="font-size:1.8rem">🎯</span><b>Practice weak words</b><small>${wk} words need work</small></button>`:''}
-  </div>`;
+  stopTimer();keyH=null;cur=t;view='menu';setTop(t.title);
+  const it=t.items,mast=it.filter(x=>stars(t,x)>=2).length,pct=Math.round(mast/it.length*100),pc=it.filter(x=>x.img).length,wk=it.filter(weak).length,p=prog(t);
+  const A=(f,ic,c1,c2,b,s)=>`<button class="act" onclick="${f}"><span class="ic" style="--c1:${c1};--c2:${c2}">${ic}</span><span><b>${b}</b><small>${s}</small></span></button>`;
+  render(`<button class="back" onclick="home()">← All topics</button>
+  <div class="banner"><div><span class="tag">TOPIC</span><h2>${esc(t.title)}</h2><span class="chip">📝 ${it.length} words</span><span class="chip">🖼️ ${pc} pictures</span><span class="chip">🏅 Best ${p.best}%</span><div class="bar" style="margin-top:6px"><i style="width:${pct}%"></i></div></div>${ring(pct,92,10)}</div>
+  <div class="acts">
+   ${A('startFC()','🃏','#6366f1','#8b5cf6','Learn','Flashcards with pictures & voice')}
+   ${A('wordList()','📖','#06b6d4','#3b82f6','Word list','Every word at a glance')}
+   ${A('quizSetup()','📝','#f97316','#ec4899','Quiz','Choose answers or type them')}
+   ${A('startMatch()','🧩','#10b981','#14b8a6','Matching game','Beat the clock')}
+   ${wk&&wk<it.length?A('quizWeak()','🎯','#f59e0b','#ef4444','Practice weak words',wk+' words need work'):''}
+  </div>`);
 }
 
 /* ----- flashcards ----- */
 let fc;
 function startFC(){fc={deck:cur.items.slice(),i:0,flip:false,rev:false};renderFC()}
+function frontSay(it){if(!S.auto)return;fc.rev?(it.def&&speak(it.def,'en')):speak(it.term,'es')}
 function renderFC(){
   view='fc';const d=fc.deck;
-  if(fc.i>=d.length){keyH=null;app.innerHTML=`<div class="panel center"><div class="big">🎉 Deck finished!</div><div class="row"><button class="btn" onclick="startFC()">Again</button><button class="btn alt" onclick="quizSetup()">Take the quiz</button><button class="btn alt" onclick="menu(cur)">Back</button></div></div>`;confetti();return}
-  const it=d[fc.i],img=it.img?`<img class="qimg" src="${it.img}">`:'';
-  const A=fc.rev?`<div class="big" style="font-size:1.5rem">${esc(it.def||'🖼️ Look at the picture!')}</div>`:`<div class="big">${esc(it.term)}</div>`;
-  const B=fc.rev?`<div class="big">${esc(it.term)}</div>`:`<div class="big" style="font-size:1.6rem">${esc(it.def||'🖼️ Look at the picture!')}</div><div style="color:var(--mut)">${esc(it.term)}</div>`;
-  app.innerHTML=`<div class="prog"><span>Card ${fc.i+1} of ${d.length}</span><span class="stars">${'★'.repeat(stars(cur,it))}${'☆'.repeat(3-stars(cur,it))}</span></div>
-  <div class="bar" style="margin-bottom:12px"><i style="width:${fc.i/d.length*100}%;background:var(--pri)"></i></div>
-  <div class="fcwrap" onclick="flipFC()"><div class="fc ${fc.flip?'flip':''}" id="fcc"><div class="face">${img}${A}<small style="color:var(--mut)">tap to flip</small></div><div class="face back">${img}${B}</div></div></div>
-  <div class="row"><button class="btn alt" onclick="speak('${esc(it.term).replace(/'/g,"\\'")}')">🔊 Listen</button><button class="btn alt" onclick="fc.rev=!fc.rev;renderFC()">🔄 Swap sides</button><button class="btn alt" onclick="fc.deck=shuffle(fc.deck);fc.i=0;renderFC()">🔀 Shuffle</button></div>
-  <div class="row"><button class="btn bad" onclick="fcMark(false)">😅 Still learning</button><button class="btn ok" onclick="fcMark(true)">✅ I know it</button></div>
-  <p class="center" style="color:var(--mut);font-size:.85rem">Keys: Space = flip · ← → = move · 1 = still learning · 2 = know it</p>`;
-  keyH=e=>{if(e.key===' '){e.preventDefault();flipFC()}else if(e.key==='ArrowRight'){fc.i=Math.min(fc.deck.length,fc.i+1);fc.flip=false;renderFC()}else if(e.key==='ArrowLeft'){fc.i=Math.max(0,fc.i-1);fc.flip=false;renderFC()}else if(e.key==='1')fcMark(false);else if(e.key==='2')fcMark(true)};
+  if(fc.i>=d.length){keyH=null;render(`<div class="card center"><div style="font-size:3rem">🎉</div><h2>Deck finished!</h2><p class="sub">Nice work. Test yourself next.</p><div class="row"><button class="btn" onclick="startFC()">Go again</button><button class="btn soft" onclick="quizSetup()">Take the quiz</button><button class="btn soft" onclick="menu(cur)">Back</button></div></div>`);confetti();return}
+  const it=d[fc.i],s=stars(cur,it),img=it.img?`<img class="qimg" src="${it.img}">`:'',none='🖼️ Look at the picture!';
+  const A=fc.rev?`<div class="prompt" style="font-size:1.6rem">${esc(it.def||none)}</div>`:`<div class="prompt">${esc(it.term)}</div>`;
+  const B=fc.rev?`<div class="prompt">${esc(it.term)}</div>`:`<div class="prompt" style="font-size:1.7rem">${esc(it.def||none)}</div><div class="sub">${esc(it.term)}</div>`;
+  render(`<button class="back" onclick="menu(cur)">← Back</button>
+  <div class="qtop"><div class="bar"><i style="width:${fc.i/d.length*100}%"></i></div><span>${fc.i+1} / ${d.length}</span><span class="st">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span></div>
+  <div class="fcw" onclick="flipFC()"><div class="fc ${fc.flip?'flip':''}" id="fcc"><div class="face">${img}${A}<span class="hint">tap card to flip · space</span></div><div class="face back">${img}${B}</div></div></div>
+  <div class="ctl"><button class="btn soft" onclick="fcGo(-1)">◀</button><button class="btn soft" onclick="sayN(${it.n},'es')">🔊 Spanish</button><button class="btn soft" onclick="sayN(${it.n},'en')">🔊 English</button><button class="btn soft" onclick="fcGo(1)">▶</button></div>
+  <div class="ctl"><button class="btn soft" onclick="fc.rev=!fc.rev;fc.flip=false;renderFC()">🔄 Swap sides</button><button class="btn soft" onclick="fc.deck=shuffle(fc.deck);fc.i=0;fc.flip=false;renderFC()">🔀 Shuffle</button></div>
+  <div class="two"><button class="btn bad big" onclick="fcMark(false)">😅 Still learning</button><button class="btn ok big" onclick="fcMark(true)">✅ I know it</button></div>
+  <p class="center note" style="margin-top:14px">Keys: Space flip · ← → move · 1 still learning · 2 I know it</p>`);
+  keyH=e=>{if(e.key===' '){e.preventDefault();flipFC()}else if(e.key==='ArrowRight')fcGo(1);else if(e.key==='ArrowLeft')fcGo(-1);else if(e.key==='1')fcMark(false);else if(e.key==='2')fcMark(true)};
+  frontSay(it);
 }
-function flipFC(){fc.flip=!fc.flip;$('#fcc').classList.toggle('flip',fc.flip);if(fc.flip&&!fc.rev)speak(fc.deck[fc.i].term)}
+function fcGo(n){fc.i=Math.max(0,Math.min(fc.deck.length,fc.i+n));fc.flip=false;renderFC()}
+function flipFC(){fc.flip=!fc.flip;$('#fcc').classList.toggle('flip',fc.flip);if(!S.auto)return;const it=fc.deck[fc.i];
+  if(fc.flip){fc.rev?speak(it.term,'es'):(it.def&&speak(it.def,'en'))}else frontSay(it)}
 function fcMark(k){const it=fc.deck[fc.i],s=prog(cur).stars;s[it.n]=k?Math.min(3,(s[it.n]||0)+1):Math.max(0,(s[it.n]||0)-1);if(k)addXP(2);store.set(P);fc.i++;fc.flip=false;renderFC()}
 
 /* ----- word list ----- */
 function wordList(){
   view='wl';keyH=null;
-  app.innerHTML=`<div class="panel"><b>📖 ${esc(cur.title)}</b> <small style="color:var(--mut)">— tap a card to hear it</small></div><div class="wl">${cur.items.map((it,i)=>`<div class="wc" onclick="speak(cur.items[${i}].term)">${it.img?`<img src="${it.img}">`:'<div style="height:110px;display:grid;place-items:center;font-size:2rem">📝</div>'}<b>${esc(it.term)}</b><span>${esc(it.def||'(see picture)')}</span><div class="stars">${'★'.repeat(stars(cur,it))}${'☆'.repeat(3-stars(cur,it))}</div></div>`).join('')}</div><div class="row"><button class="btn alt" onclick="menu(cur)">Back</button></div>`;
+  render(`<button class="back" onclick="menu(cur)">← Back</button><div class="card"><b>📖 ${esc(cur.title)}</b><div class="note">Tap a card to hear the Spanish. Tap EN for the English.</div></div>
+  <div class="wl">${cur.items.map(it=>{const s=stars(cur,it);return`<div class="wc" onclick="sayN(${it.n},'es')">${it.def?`<button class="en" onclick="event.stopPropagation();sayN(${it.n},'en')">🔊 EN</button>`:''}${it.img?`<img src="${it.img}">`:'<div class="ph">📝</div>'}<b>${esc(it.term)}</b><span>${esc(it.def||'(see picture)')}</span><div class="st">${'★'.repeat(s)}${'☆'.repeat(3-s)}</div></div>`}).join('')}</div>`);
 }
 
-/* ----- quiz ----- */
+/* ----- answer checking (accents + typo tolerant) ----- */
 const clean=s=>s.toLowerCase().replace(/[’‘]/g,"'").replace(/[.…¿?¡!,;:"“”()]/g,'').replace(/\s+/g,' ').trim();
 const norm=s=>clean(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 function variants(s){const o=new Set();for(const part of s.split(' / ')){let b=[part];if(/o\/a/.test(part))b=[part.replace(/o\/a/g,'o'),part.replace(/o\/a/g,'a')];b.forEach(x=>{o.add(x);o.add(x.replace(/^to /,''))})}return[...o]}
-function grade(inp,ans){const vs=ans.flatMap(variants),c=clean(inp);if(!c)return'no';if(vs.some(v=>clean(v)===c))return'ok';const n=norm(inp);return vs.some(v=>norm(v)===n)?'accent':'no'}
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=Array.from({length:n+1},(_,j)=>j);for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+const tol=w=>w.length<=3?0:w.length<=5?1:w.length<=8?2:3;   // letters allowed to be wrong, per word
+function typoOK(inp,v){const a=norm(inp).split(' '),b=norm(v).split(' ');
+  if(a.length===b.length)return a.every((w,i)=>lev(w,b[i])<=tol(b[i]));
+  const A=a.join(''),B=b.join('');return lev(A,B)<=Math.min(3,tol(B))}
+function grade(inp,ans){const vs=ans.flatMap(variants),c=clean(inp);if(!c)return'no';if(vs.some(v=>clean(v)===c))return'ok';const n=norm(inp);if(vs.some(v=>norm(v)===n))return'accent';return vs.some(v=>typoOK(inp,v))?'typo':'no'}
+
+/* ----- quiz ----- */
 let qo={dir:'mixed',fmt:'mixed',n:10},qz;
-function chips(k,opts){return`<div class="chips">${opts.map(([v,l])=>`<button class="chip ${qo[k]===v?'on':''}" onclick="qo.${k}=${typeof v==='number'?v:`'${v}'`};quizSetup()">${l}</button>`).join('')}</div>`}
+const seg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button class="sg ${qo[k]===v?'on':''}" onclick="qo.${k}=${typeof v==='number'?v:`'${v}'`};quizSetup()">${l}</button>`).join('')}</div>`;
 function quizSetup(){
   view='qs';keyH=null;
-  app.innerHTML=`<div class="panel"><h3 style="margin-top:0">📝 Quiz setup</h3><b>Question type</b>${chips('dir',[['mixed','🎲 Mixed'],['es-en','Spanish → English'],['en-es','English → Spanish'],['img-es','🖼️ Picture → Spanish']])}
-  <b>Answer style</b>${chips('fmt',[['mixed','🎲 Mixed'],['mc','Multiple choice'],['type','⌨️ Type it']])}
-  <b>Length</b>${chips('n',[[10,'10'],[20,'20'],[999,'All']])}
-  <div class="row"><button class="btn" onclick="startQuiz()">Start quiz 🚀</button><button class="btn alt" onclick="menu(cur)">Back</button></div></div>`;
+  render(`<button class="back" onclick="menu(cur)">← Back</button><div class="card"><h2 style="margin-top:0">📝 Set up your quiz</h2>
+  <h3 class="sec">Question type</h3>${seg('dir',[['mixed','🎲 Mixed'],['es-en','Spanish → English'],['en-es','English → Spanish'],['img-es','🖼️ Picture → Spanish']])}
+  <h3 class="sec">Answer style</h3>${seg('fmt',[['mixed','🎲 Mixed'],['mc','Multiple choice'],['type','⌨️ Type it']])}
+  <h3 class="sec">Length</h3>${seg('n',[[10,'10 questions'],[20,'20 questions'],[999,'All words']])}
+  <p class="note">Typed answers forgive small typos and missing accents.</p>
+  <div class="row"><button class="btn big" onclick="startQuiz()">Start quiz 🚀</button></div></div>`);
 }
 function makeQuiz(items,o){
   const qs=[];
@@ -257,51 +344,51 @@ function makeQuiz(items,o){
 }
 function answersOf(q){const it=q.it;if(q.dir==='es-en')return[it.def];if(q.dir==='en-es')return cur.items.filter(x=>x.def&&norm(x.def)===norm(it.def)).map(x=>x.term);return[it.term]}
 function prepQ(q){
-  q.ans=answersOf(q);const acc=new Set(q.ans.map(norm)),key=q.dir==='es-en'?'def':'term';
-  q.show=q.ans[0];
-  if(q.fmt==='mc'){
-    const pool=[...new Set(cur.items.map(x=>x[key]).filter(v=>v&&!acc.has(norm(v))))];
-    q.opts=shuffle([q.show,...shuffle(pool).slice(0,3)]);
-  }
+  q.ans=answersOf(q);const acc=new Set(q.ans.map(norm)),key=q.dir==='es-en'?'def':'term';q.show=q.ans[0];
+  if(q.fmt==='mc'){const pool=[...new Set(cur.items.map(x=>x[key]).filter(v=>v&&!acc.has(norm(v))))];q.opts=shuffle([q.show,...shuffle(pool).slice(0,3)])}
 }
 function startQuiz(items){
   const qs=makeQuiz(items||cur.items,{...qo,n:qo.n>=999?1e9:qo.n});
-  if(!qs.length){app.innerHTML=`<div class="panel center">Not enough material for that quiz type. <div class="row"><button class="btn" onclick="quizSetup()">Back</button></div></div>`;return}
+  if(!qs.length){render(`<div class="card center">Not enough material for that quiz type.<div class="row"><button class="btn" onclick="quizSetup()">Back</button></div></div>`);return}
   qs.forEach(prepQ);qz={qs,i:0,score:0,streak:0,best:0,missed:[],done:false};showQ();
 }
 function quizWeak(){const o={...qo};qo={dir:'mixed',fmt:'mixed',n:999};startQuiz(cur.items.filter(weak));qo=o}
 function showQ(){
   const q=qz.qs[qz.i];if(!q)return finishQuiz();view='quiz';qz.done=false;const it=q.it;
-  const pr=q.dir==='es-en'?`<span class="tag">Spanish → English</span><div class="big">${esc(it.term)} <button class="btn alt" style="padding:6px 10px" onclick="speak('${esc(it.term).replace(/'/g,"\\'")}')">🔊</button></div><div>What does it mean?</div>`
-    :q.dir==='en-es'?`<span class="tag">English → Spanish</span><div class="big">${esc(it.def)}</div><div>How do you say it in Spanish?</div>`
-    :`<span class="tag">Picture → Spanish</span><img class="qimg" src="${it.img}"><div>What is this in Spanish?</div>`;
-  const body=q.fmt==='mc'?`<div class="opts">${q.opts.map((o,i)=>`<button class="opt" onclick="pickMC(${i})"><b style="color:var(--mut)">${i+1}</b> &nbsp;${esc(o)}</button>`).join('')}</div>`
-    :`<input class="ans" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer…">${q.dir!=='es-en'?`<div class="sp">${'áéíóúñü¿¡'.split('').map(c=>`<button onclick="addCh('${c}')">${c}</button>`).join('')}</div>`:''}<div class="row"><button class="btn" onclick="checkTyped()">Check</button></div>`;
-  app.innerHTML=`<div class="prog"><span>Question ${qz.i+1} of ${qz.qs.length}</span><span>🔥 ${qz.streak} · ${qz.score} correct</span></div><div class="bar" style="margin-bottom:12px"><i style="width:${qz.i/qz.qs.length*100}%;background:var(--pri)"></i></div>
-  <div class="panel center">${pr}${body}<div id="fb"></div></div>`;
-  if(q.fmt==='type')setTimeout(()=>$('#ans')&&$('#ans').focus(),50);
-  keyH=e=>{if(e.key==='Enter'){if(qz.done)nextQ();else if(q.fmt==='type')checkTyped()}else if(q.fmt==='mc'&&!qz.done&&/^[1-4]$/.test(e.key)&&q.opts[+e.key-1]!==undefined)pickMC(+e.key-1)};
+  const pr=q.dir==='es-en'?`<span class="tag">SPANISH → ENGLISH</span><div class="prompt">${esc(it.term)}</div><button class="btn soft" onclick="sayN(${it.n},'es')">🔊 Listen</button><div class="sub" style="margin-top:8px">What does it mean?</div>`
+    :q.dir==='en-es'?`<span class="tag">ENGLISH → SPANISH</span><div class="prompt">${esc(it.def)}</div><div class="sub">How do you say it in Spanish?</div>`
+    :`<span class="tag">PICTURE → SPANISH</span><img class="qimg" src="${it.img}"><div class="sub">What is this in Spanish?</div>`;
+  const body=q.fmt==='mc'?`<div class="opts">${q.opts.map((o,i)=>`<button class="opt" onclick="pickMC(${i})"><span class="k">${'ABCD'[i]}</span>${esc(o)}</button>`).join('')}</div>`
+    :`<input class="ans" id="ans" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="Type your answer…">${q.dir!=='es-en'?`<div class="sp">${'áéíóúñü¿¡'.split('').map(c=>`<button onclick="addCh('${c}')">${c}</button>`).join('')}</div>`:''}<div class="row"><button class="btn big" onclick="checkTyped()">Check ✓</button></div>`;
+  render(`<div class="qtop"><div class="bar"><i style="width:${qz.i/qz.qs.length*100}%"></i></div><span>${qz.i+1} / ${qz.qs.length}</span><span class="streak">🔥 ${qz.streak}</span></div>
+  <div class="card center">${pr}${body}<div id="fb"></div></div>`);
+  if(q.fmt==='type')setTimeout(()=>$('#ans')&&$('#ans').focus(),60);
+  keyH=e=>{if(e.key==='Enter'){if(qz.done)nextQ();else if(q.fmt==='type')checkTyped()}else if(q.fmt==='mc'&&!qz.done){const k='abcd'.indexOf(e.key.toLowerCase()),n=+e.key-1,i=k>=0?k:n;if(i>=0&&i<q.opts.length)pickMC(i)}};
+  if(S.auto&&q.dir==='es-en')speak(it.term,'es');
 }
 function addCh(c){const a=$('#ans');a.value+=c;a.focus()}
 function pickMC(i){const q=qz.qs[qz.i];if(qz.done)return;const ok=q.ans.some(a=>norm(a)===norm(q.opts[i]));
   document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(q.ans.some(a=>norm(a)===norm(q.opts[j])))b.classList.add('good');else if(j===i)b.classList.add('wrong')});resolveQ(ok,'')}
-function checkTyped(){const q=qz.qs[qz.i];if(qz.done)return;const inp=$('#ans').value,g=grade(inp,q.ans);$('#ans').disabled=true;
-  resolveQ(g!=='no',g==='accent'?`Watch the accents: <b>${esc(q.show)}</b>`:'')}
+function checkTyped(){const q=qz.qs[qz.i];if(qz.done)return;const g=grade($('#ans').value,q.ans);$('#ans').disabled=true;
+  resolveQ(g!=='no',g==='accent'?`Watch the accents → <b>${esc(q.show)}</b>`:g==='typo'?`Small typo — the correct spelling is <b>${esc(q.show)}</b>`:'')}
 function resolveQ(ok,note){
   const q=qz.qs[qz.i];qz.done=true;const s=prog(cur).stars,n=q.it.n;
   if(ok){qz.score++;qz.streak++;qz.best=Math.max(qz.best,qz.streak);s[n]=Math.min(3,(s[n]||0)+1);addXP(10+Math.min(qz.streak,5))}
   else{qz.streak=0;qz.missed.push(q);s[n]=Math.max(0,(s[n]||0)-1)}
   store.set(P);
-  $('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}"><b>${ok?['✅ Correct!','🌟 Great job!','🔥 Nice one!','💪 Yes!'][Math.random()*4|0]:'❌ Not quite'}</b>${ok?'':`<div>Answer: <b>${esc(q.show)}</b></div>`}${note?`<div>${note}</div>`:''}
-  ${q.it.img&&q.dir!=='img-es'?`<img class="qimg" style="max-height:140px" src="${q.it.img}">`:''}<div style="color:var(--mut)">${esc(q.it.term)} = ${esc(q.it.def||'(picture)')}</div></div>
-  <div class="row"><button class="btn" onclick="nextQ()">${qz.i+1>=qz.qs.length?'See results':'Next →'}</button></div>`;
+  $('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}"><b class="t">${ok?['✅ Correct!','🌟 Great job!','🔥 Nice one!','💪 Yes!'][Math.random()*4|0]:'❌ Not quite'}</b>${ok?'':`<div>Answer: <b>${esc(q.show)}</b></div>`}${note?`<div>${note}</div>`:''}
+  ${q.it.img&&q.dir!=='img-es'?`<img class="qimg" style="max-height:130px" src="${q.it.img}">`:''}<div class="sub">${esc(q.it.term)} = ${esc(q.it.def||'(picture)')}</div></div>
+  <div class="row"><button class="btn soft" onclick="sayBoth(${q.it.n})">🔊 Hear it</button><button class="btn big" onclick="nextQ()">${qz.i+1>=qz.qs.length?'See results':'Next →'}</button></div>`;
+  if(S.auto&&q.dir!=='es-en')speak(q.it.term,'es');
 }
 function nextQ(){qz.i++;showQ()}
 function finishQuiz(){
   view='res';keyH=null;const n=qz.qs.length,pc=Math.round(qz.score/n*100),p=prog(cur);p.best=Math.max(p.best,pc);p.plays++;store.set(P);addXP(5);
-  app.innerHTML=`<div class="panel center"><div class="big">${pc>=90?'🏆 Amazing!':pc>=70?'🎉 Well done!':pc>=50?'👍 Good effort!':'💪 Keep practising!'}</div><div class="big" style="font-size:3rem">${pc}%</div><p>${qz.score} of ${n} correct · best streak 🔥 ${qz.best}</p>
-  ${qz.missed.length?`<h4>Words to review</h4>${qz.missed.map(q=>`<div class="miss">${q.it.img?`<img src="${q.it.img}">`:''}<div><b>${esc(q.it.term)}</b><br><span style="color:var(--mut)">${esc(q.it.def||'(see picture)')}</span></div></div>`).join('')}`:''}
-  <div class="row"><button class="btn" onclick="startQuiz()">Try again</button>${qz.missed.length?`<button class="btn alt" onclick="startQuiz(qz.missed.map(q=>q.it))">Retry missed</button>`:''}<button class="btn alt" onclick="menu(cur)">Back</button></div></div>`;
+  render(`<div class="card center"><div style="font-size:2.6rem">${pc>=90?'🏆':pc>=70?'🎉':pc>=50?'👍':'💪'}</div><h2 style="margin:6px 0">${pc>=90?'Amazing!':pc>=70?'Well done!':pc>=50?'Good effort!':'Keep practising!'}</h2>
+  <div style="display:grid;place-items:center">${ring(pc,150,14)}</div>
+  <div class="stats"><div><b>${qz.score}/${n}</b><span>correct</span></div><div><b>🔥 ${qz.best}</b><span>best streak</span></div><div><b>${p.best}%</b><span>best score</span></div></div>
+  ${qz.missed.length?`<h3 class="sec" style="text-align:left">Words to review</h3>${qz.missed.map(q=>`<div class="miss">${q.it.img?`<img src="${q.it.img}">`:''}<div style="flex:1"><b>${esc(q.it.term)}</b><br><span class="sub">${esc(q.it.def||'(see picture)')}</span></div><button class="btn soft" style="padding:8px 12px" onclick="sayBoth(${q.it.n})">🔊</button></div>`).join('')}`:''}
+  <div class="row"><button class="btn" onclick="startQuiz()">Try again</button>${qz.missed.length?`<button class="btn soft" onclick="startQuiz(qz.missed.map(q=>q.it))">Retry missed</button>`:''}<button class="btn soft" onclick="menu(cur)">Back</button></div></div>`);
   if(pc>=70)confetti();
 }
 
@@ -315,26 +402,44 @@ function startMatch(){
 }
 function renderMatch(){
   view='match';keyH=null;
-  app.innerHTML=`<div class="prog"><span>🧩 Match each Spanish word with its meaning</span><span>⏱ <b id="tm">0s</b> · moves ${mt.moves}</span></div><div class="mg">${mt.cards.map((c,i)=>`<button class="mc ${mt.done.has(i)?'done':''} ${mt.sel===i?'sel':''}" onclick="pickM(${i})">${c.side==='L'?`<b>${esc(c.it.term)}</b>`:`${c.it.img?`<img src="${c.it.img}">`:''}${c.it.def?`<span>${esc(c.it.def)}</span>`:''}`}</button>`).join('')}</div><div class="row"><button class="btn alt" onclick="menu(cur)">Back</button></div>`;
+  render(`<button class="back" onclick="menu(cur)">← Back</button><div class="qtop"><b>🧩 Match each Spanish word with its meaning</b><span style="margin-left:auto">⏱ <b id="tm">${Math.floor((Date.now()-mt.t0)/1000)}s</b> · ${mt.moves} moves</span></div>
+  <div class="mg">${mt.cards.map((c,i)=>`<button class="mc ${mt.done.has(i)?'done':''} ${mt.sel===i?'sel':''}" onclick="pickM(${i})">${c.side==='L'?`<b>${esc(c.it.term)}</b>`:`${c.it.img?`<img src="${c.it.img}">`:''}${c.it.def?`<small>${esc(c.it.def)}</small>`:''}`}</button>`).join('')}</div>`);
 }
 function pickM(i){
   if(mt.done.has(i)||mt.sel===i)return;
-  if(mt.sel===null){mt.sel=i;speakIf(i);return renderMatch()}
+  if(mt.sel===null){mt.sel=i;if(S.auto&&mt.cards[i].side==='L')speak(mt.cards[i].it.term,'es');return renderMatch()}
   const a=mt.cards[mt.sel],b=mt.cards[i];mt.moves++;
   const same=a.side!==b.side&&(a.it===b.it||(a.it.def&&norm(a.it.def)===norm(b.it.def)));
   if(same){mt.done.add(mt.sel);mt.done.add(i);mt.sel=null;addXP(5);renderMatch();
     if(mt.done.size===mt.cards.length){stopTimer();const t=Math.floor((Date.now()-mt.t0)/1000);confetti();
-      app.innerHTML=`<div class="panel center"><div class="big">🎉 All matched!</div><p>${t} seconds · ${mt.moves} moves</p><div class="row"><button class="btn" onclick="startMatch()">Play again</button><button class="btn alt" onclick="menu(cur)">Back</button></div></div>`}}
+      render(`<div class="card center"><div style="font-size:3rem">🎉</div><h2>All matched!</h2><p class="sub">${t} seconds · ${mt.moves} moves</p><div class="row"><button class="btn" onclick="startMatch()">Play again</button><button class="btn soft" onclick="menu(cur)">Back</button></div></div>`)}}
   else{const s=mt.sel;mt.sel=null;renderMatch();const bs=document.querySelectorAll('.mc');[s,i].forEach(k=>bs[k].classList.add('shake'));setTimeout(()=>view==='match'&&renderMatch(),600)}
 }
-function speakIf(i){const c=mt.cards[i];if(c.side==='L')speak(c.it.term)}
+
+/* ----- settings (voice) ----- */
+function setS(k,v){S[k]=v;saveS();if(k==='theme')applyTheme();settings()}
+function settings(){
+  view='set';keyH=null;if(view!=='set'||!ret)ret=()=>home();
+  const from=cur?()=>menu(cur):home;window._ret=from;
+  const sg=(k,v,l)=>`<button class="sg ${S[k]===v?'on':''}" onclick="setS('${k}',${JSON.stringify(v).replace(/"/g,"'")})">${l}</button>`;
+  const sel=lang=>{const l=Voice.for(lang),cu=Voice.pick(lang);return l.length?`<select onchange="S.${lang}=this.value;saveS()">${l.map(v=>`<option value="${esc(v.name)}" ${cu&&cu.name===v.name?'selected':''}>${Voice.sc(v)>=60?'★ ':''}${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select>`:`<p class="note">No built-in ${lang==='es'?'Spanish':'English'} voice found on this device — an online voice will be used instead.</p>`};
+  render(`<button class="back" onclick="_ret()">← Back</button><div class="card"><h2 style="margin-top:0">⚙️ Voice & settings</h2>
+  <h3 class="sec">Spanish voice</h3>${sel('es')}<button class="btn soft" onclick="speak('Hola, ¿cómo estás? Hoy vamos a aprender español.','es')">▶ Test Spanish</button>
+  <h3 class="sec" style="margin-top:20px">English voice</h3>${sel('en')}<button class="btn soft" onclick="speak('Hello! Today we are going to learn Spanish together.','en')">▶ Test English</button>
+  <h3 class="sec" style="margin-top:22px">Speed</h3><div class="seg">${sg('rate',.65,'🐢 Slow')}${sg('rate',.9,'Normal')}${sg('rate',1.05,'Fast')}</div>
+  <h3 class="sec">Auto-play sound</h3><div class="seg">${sg('auto',true,'On')}${sg('auto',false,'Off')}</div>
+  <h3 class="sec">Theme</h3><div class="seg">${sg('theme','','Auto')}${sg('theme','light','☀️ Light')}${sg('theme','dark','🌙 Dark')}</div>
+  <p class="note">Voices marked ★ are the most natural. For the best sound use Microsoft Edge (Natural voices), Chrome or Safari. On iPhone/iPad, add an Enhanced voice in Settings → Accessibility → Spoken Content. Everything is free and works without an account.</p>
+  <button class="btn soft" onclick="resetP(this)">Reset all progress</button></div>`);
+}
+function resetP(b){if(!b.dataset.s){b.dataset.s=1;b.textContent='Tap again to confirm';setTimeout(()=>{b.dataset.s='';b.textContent='Reset all progress'},3500)}else{P={_set:S};store.set(P);T.forEach(t=>{});setTop('');b.textContent='Progress reset ✓'}}
 
 document.addEventListener('keydown',e=>{if(keyH&&!(e.target.tagName==='INPUT'&&e.key!=='Enter'))keyH(e)});
 
 /* ---------- start ---------- */
 (async()=>{
-  setTop('Study Hub');
-  app.innerHTML=`<div class="panel center"><div class="spin"></div><b>Looking for study materials…</b></div>`;
+  applyTheme();setTop('');
+  render(`<div class="card center"><div class="spin"></div><b>Looking for study materials…</b></div>`);
   T=await discover();home();
 })();
 </script>
