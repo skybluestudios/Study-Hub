@@ -1,0 +1,4 @@
+# One PDF per line (file name, relative to this folder).
+# Optional: add a custom title after a | like:  Quizlet.pdf | Unidad 2
+# Lines starting with # are ignored.
+Quizlet.pdf
